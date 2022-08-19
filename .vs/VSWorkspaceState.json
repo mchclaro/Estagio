@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\backend",
+    "\\backend\\src",
+    "\\backend\\src\\Application",
+    "\\backend\\src\\Application\\Aggregates",
+    "\\backend\\src\\Application\\Aggregates\\PaymentMethod",
+    "\\backend\\src\\Application\\Aggregates\\PaymentMethod\\Commands",
+    "\\backend\\src\\Application\\Result",
+    "\\backend\\src\\Infrastructure",
+    "\\backend\\src\\Infrastructure\\FileService"
+  ],
+  "SelectedNode": "\\backend\\src\\Data\\Repositories\\UserRepository.cs",
+  "PreviewInSolutionExplorer": false
+}
