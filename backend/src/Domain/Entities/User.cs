@@ -17,5 +17,6 @@ namespace Domain.Entities
         public bool IsActive { get; set; }
         public Role Role { get; set; }
         public virtual ICollection<Timetable> Timetables { get; set; }
+        public virtual Timetable Timetable { get; set; }
     }
 }

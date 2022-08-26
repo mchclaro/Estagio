@@ -41,12 +41,51 @@ namespace Data.Repositories
 
         public async Task<Appointment> Read(int id)
         {
-            return await _context.Appointments.FirstOrDefaultAsync(c => c.Id == id);
+            var res = await _context.Appointments
+                .Include(a => a.Client)
+                .Include(a => a.Estimate)
+                .Include(a => a.AppointmentPayments)
+                .Select(x => new Appointment
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    DataHeld = x.DataHeld,
+                    Status = x.Status,
+                    //resolver problema aqui também, mesma coisa do ReadAll certeza
+                    // Client = new Client
+                    // {
+                    //     Name = x.Client.Name,
+                    //     Phone = x.Client.Phone,
+                    //     PhotoUrl = x.Client.PhotoUrl
+                    // },
+                    // Estimate = new Estimate
+                    // {
+                    //     Service = x.Estimate.Service,
+                    //     Description = x.Estimate.Description,
+                    //     Value = x.Estimate.Value,
+                    //     ValidateDate = x.Estimate.ValidateDate
+                    // },
+                    // AppointmentPayment = new AppointmentPayment
+                    // {
+                    //     IsSignal = x.AppointmentPayment.IsSignal,
+                    //     DatePayment = x.AppointmentPayment.DatePayment,
+                    //     Value = x.AppointmentPayment.Value,
+                    //     PaymentStatus = x.AppointmentPayment.PaymentStatus,
+                    //     PaymentMethodId = x.AppointmentPayment.PaymentMethodId
+                    // },
+                }).FirstOrDefaultAsync(c => c.Id == id);
+
+            return res;
         }
 
         public async Task<IList<Appointment>> ReadAll()
         {
-            return await _context.Appointments.ToListAsync();
+            return await _context.Appointments
+                    // ta com erro quando faz include nessas tabelas, não achei o problema ainda, já mapeei mas n resolveu
+                    // .Include(a => a.Client)
+                    // .Include(a => a.Estimate)
+                    // .Include(a => a.AppointmentPayments)
+                    .ToListAsync();
         }
 
         public async Task Update(Appointment appointment)
@@ -57,35 +96,33 @@ namespace Data.Repositories
                 appoint.Description = appointment.Description;
                 appoint.DataHeld = appointment.DataHeld;
                 appoint.Status = appointment.Status;
+                appoint.ClientId = appointment.ClientId;
+                appoint.EstimateId = appointment.EstimateId;
             }
 
-            var client = await _context.Clients.FirstOrDefaultAsync(c => c.Id == appointment.ClientId);
-            if (client != null)
-            {
-                client.Name = appointment.Client.Name;
-                client.Phone = appointment.Client.Phone;
-            }
-
-            var estimate = await _context.Estimates.FirstOrDefaultAsync(c => c.Id == appointment.ClientId);
+            var estimate = await _context.Estimates.FirstOrDefaultAsync(c => c.Id == appointment.EstimateId);
             if (estimate != null)
             {
                 estimate.Service= appointment.Estimate.Service;
                 estimate.Description = appointment.Estimate.Description;
+                estimate.Value = appointment.Estimate.Value;
+                estimate.ClientId = appointment.ClientId;
             }
             
             await _context.SaveChangesAsync();
 
+            
             //atualiza os métodos de pagamento do agendamento
-                await _appointmentPaymentRepository.Delete(appointment.Id);
+            // await _appointmentPaymentRepository.Delete(appointment.Id);
 
-                foreach (var id in appointment.PaymentMethodIds)
-                {
-                    await _appointmentPaymentRepository.Create(new AppointmentPayment
-                    {
-                        AppointmentId = appointment.Id,
-                        PaymentMethodId = id
-                    });
-                }
+            // foreach (var id in appointment.PaymentMethodIds)
+            // {
+            //     await _appointmentPaymentRepository.Create(new AppointmentPayment
+            //     {
+            //         AppointmentId = appointment.Id,
+            //         PaymentMethodId = id
+            //     });
+            // }
         }
     }
 }

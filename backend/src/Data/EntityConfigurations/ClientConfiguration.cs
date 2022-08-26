@@ -30,7 +30,7 @@ namespace Data.EntityConfigurations
             builder.HasOne(e => e.Address)
                 .WithMany(x => x.Clients)
                 .HasForeignKey(e => e.AddressId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -28,6 +28,5 @@ namespace Domain.DTO.User
         public ulong Break { get; set; }
         public Weekday DayOfWeek { get; set; }
         public int UserId { get; set; }
-        public virtual Domain.Entities.User User { get; set; }
     }
 }

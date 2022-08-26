@@ -5,12 +5,13 @@
     "\\backend\\src",
     "\\backend\\src\\Application",
     "\\backend\\src\\Application\\Aggregates",
-    "\\backend\\src\\Application\\Aggregates\\PaymentMethod",
-    "\\backend\\src\\Application\\Aggregates\\PaymentMethod\\Commands",
-    "\\backend\\src\\Application\\Result",
-    "\\backend\\src\\Infrastructure",
-    "\\backend\\src\\Infrastructure\\FileService"
+    "\\backend\\src\\Application\\Aggregates\\Client",
+    "\\backend\\src\\Application\\Aggregates\\Client\\Queries",
+    "\\backend\\src\\Domain",
+    "\\backend\\src\\Domain\\DTO",
+    "\\backend\\src\\Domain\\DTO\\Client",
+    "\\backend\\src\\Domain\\Utils"
   ],
-  "SelectedNode": "\\backend\\src\\Data\\Repositories\\UserRepository.cs",
+  "SelectedNode": "\\backend\\src\\Data\\Context\\DataContext.cs",
   "PreviewInSolutionExplorer": false
 }

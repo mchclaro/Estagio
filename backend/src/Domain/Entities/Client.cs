@@ -11,7 +11,7 @@ namespace Domain.Entities
         public string Name { get; set; }
         public string Phone { get; set; }
         public string PhotoUrl { get; set; }
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
         public virtual ICollection<Appointment> Appointments { get; set; }
         public virtual Address Address { get; set; }
         public virtual ICollection<Estimate> Estimates { get; set; }

@@ -16,7 +16,7 @@ namespace Api.Controllers
         /// Cria um cliente
         /// </summary>
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] CreateClient.Command command)
+        public async Task<IActionResult> Create([FromForm] CreateClient.Command command)
         {
             return GetIActionResult(await Mediator.Send(command));
         }
@@ -25,7 +25,7 @@ namespace Api.Controllers
         /// Atualiza um cliente
         /// </summary>
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] UpdateClient.Command command)
+        public async Task<IActionResult> Update([FromForm] UpdateClient.Command command)
         {
             return GetIActionResult(await Mediator.Send(command));
         }

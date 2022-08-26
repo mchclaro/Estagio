@@ -56,26 +56,57 @@ namespace Data.Repositories
 
         public async Task<User> Read(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(c => c.Id == id);
+            var res = await _context.Users
+                .Include(x => x.Timetables)
+                .Select(x => new User
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Phone = x.Phone,
+                    Email = x.Email,
+                    PhotoUrl = x.PhotoUrl,
+                    Role = x.Role,
+                    Timetable = new Timetable
+                    {
+                        Start = x.Timetable.Start,
+                        End = x.Timetable.End,
+                        Break = x.Timetable.Break,
+                        DayOfWeek = x.Timetable.DayOfWeek
+                    },
+                }).FirstOrDefaultAsync(c => c.Id == id);
+
+            return res;
         }
 
         public async Task<IList<User>> ReadAll()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Include(x => x.Timetable)
+                .ToListAsync();
         }
 
         public async Task Update(int id, User user)
         {
             var res = await _context.Users.FirstOrDefaultAsync(c => c.Id == user.Id);
 
-            if (res == null)
-                return;
+            if (res != null)
+            {
+                res.Name = user.Name;
+                res.Phone = user.Phone;
+                res.Email = user.Email;
+                res.PhotoUrl = user.PhotoUrl;
+                res.IsActive = user.IsActive;
+            }
 
-            res.Name = user.Name;
-            res.Phone = user.Phone;
-            res.Email = user.Email;
-            res.PhotoUrl = user.PhotoUrl;
-            res.IsActive = user.IsActive;
+            var timetable = await _context.Timetables.FirstOrDefaultAsync(c => c.Id == user.Id);
+
+            if (timetable != null)
+            {
+                timetable.Start = user.Timetable.Start;
+                timetable.End = user.Timetable.End;
+                timetable.Break = user.Timetable.Break;
+                timetable.DayOfWeek = user.Timetable.DayOfWeek;
+            }
 
             await _context.SaveChangesAsync();
         }

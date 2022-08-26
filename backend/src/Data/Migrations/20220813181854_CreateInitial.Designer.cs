@@ -48,7 +48,7 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StreetNumber")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZipCode")
                         .HasColumnType("nvarchar(max)");
@@ -153,7 +153,8 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("AddressId")
+                        .IsUnique();
 
                     b.ToTable("Client");
                 });
@@ -368,7 +369,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Domain.Entities.Address", "Address")
                         .WithMany("Client")
-                        .HasForeignKey("AddressId")
+                        .HasForeignKey("Domain.Entities.Client", "AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -17,6 +17,7 @@ namespace Domain.Entities
         public int ClientId { get; set; }
         public virtual Estimate Estimate { get; set; }
         public virtual Client Client { get; set; }
+        // public virtual AppointmentPayment AppointmentPayment { get; set; }
         public virtual ICollection<AppointmentPayment> AppointmentPayments { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
         

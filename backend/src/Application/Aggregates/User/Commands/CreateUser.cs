@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Application.Result;
 using MediatR;
+using Domain.Entities;
 
 namespace backend.src.Application.Aggregates.User.Commands
 {
@@ -22,6 +23,11 @@ namespace backend.src.Application.Aggregates.User.Commands
             public bool IsActive { get; set; }
             public IFormFile PhotoUrl { get; set; }
             public Role Role { get; set; }
+            public ulong Start { get; set; }
+            public ulong End { get; set; }
+            public ulong Break { get; set; }
+            public Weekday DayOfWeek { get; set; }
+            public string Timetable { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
@@ -35,17 +41,20 @@ namespace backend.src.Application.Aggregates.User.Commands
         public class Handler : IRequestHandler<Command, StandardResult<object>>
         {
             private readonly IUserRepository _userRepository;
+            private readonly ITimetableRepository _timetableRepository;
             private readonly IFileStorageService _fileStorage;
             private readonly IConfiguration _configuration;
             private readonly IMapper _mapper;
             private readonly string _imageBucket;
 
             public Handler(IUserRepository userRepository,
+                           ITimetableRepository timetableRepository,
                            IFileStorageService fileStorage,
                            IConfiguration configuration,
                            IMapper mapper)
             {
                 _userRepository = userRepository;
+                _timetableRepository = timetableRepository;
                 _fileStorage = fileStorage;
                 _configuration = configuration;
                 _mapper = mapper;
@@ -84,14 +93,8 @@ namespace backend.src.Application.Aggregates.User.Commands
                         return result.GetResult();
                     }
 
-                    // if (request.PhotoUrl != null && !FileSizeValidationHelper.IsFileSizeAllowed(_configuration, request.PhotoUrl.Length))
-                    // {
-                    //     result.AddError(Code.BadRequest, "O tamanho da foto excede o limite permitido. Selecione uma foto que possua no máximo 8MB de tamanho.");
-                    //     return result.GetResult();
-                    // }
-
-                    var entity = _mapper.Map<Command, Domain.Entities.User>(request);
-
+                    var entity = _mapper.Map<Command, Domain.Entities.User>(request);                 
+                    
                     //faz o upload da foto do user)
                     if (request.PhotoUrl != null)
                     {
@@ -101,7 +104,8 @@ namespace backend.src.Application.Aggregates.User.Commands
                         photoUrl = _fileStorage.GetFileUrl(_imageBucket, objectName);
                     }
 
-                    await _userRepository.Create(entity);
+                    var userId = await _userRepository.Create(entity);
+                    await generateTimeTables(request, userId);
                     
                 }
                 catch(Exception)
@@ -115,6 +119,17 @@ namespace backend.src.Application.Aggregates.User.Commands
                 }
 
                 return result.GetResult();
+            }
+
+            public async Task generateTimeTables(Command request, int userId)
+            {
+                var timeTableList = TimeTableHelper.ParseManyTimeTables(request.Timetable);
+                foreach (var timetable in timeTableList)
+                {
+                    timetable.UserId = userId;
+
+                    await _timetableRepository.Create(timetable);
+                }
             }
         }
     }

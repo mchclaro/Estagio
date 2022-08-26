@@ -24,14 +24,17 @@ namespace Application.Aggregates.Estimate.Commands
         public class Handler : IRequestHandler<Command, StandardResult<object>>
         {
             private readonly IEstimateRepository _estimateRepository;
+            private readonly IClientRepository _clientRepository;
             private readonly IConfiguration _configuration;
             private readonly IMapper _mapper;
 
             public Handler(IEstimateRepository estimateRepository,
+                            IClientRepository clientRepository,
                            IConfiguration configuration,
                            IMapper mapper)
             {
                 _estimateRepository = estimateRepository;
+                _clientRepository = clientRepository;
                 _configuration = configuration;
                 _mapper = mapper;
             }
@@ -41,7 +44,7 @@ namespace Application.Aggregates.Estimate.Commands
 
                 try
                 {
-                    var existsClient = await _estimateRepository.Exists(request.ClientId);
+                    var existsClient = await _clientRepository.Exists(request.ClientId);
                     if (!existsClient)
                     {
                         string invalidMedicMessage = "Cliente não está registrado";

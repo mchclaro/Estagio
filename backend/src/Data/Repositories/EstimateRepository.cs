@@ -38,7 +38,10 @@ namespace Data.Repositories
 
         public async Task<IList<Estimate>> ReadAll()
         {
-            return await _context.Estimates.ToListAsync();
+            return await _context.Estimates
+                // .Include(x => x.Client) se fazer esse include, tem q mapear no MappingProfile
+                //pra nao dar um 500
+                .ToListAsync();
         }
 
         // public async Task Update(int id, Estimate estimate)

@@ -18,7 +18,13 @@ namespace Application.Aggregates.Client.Commands
             public string Name { get; set; }
             public string Phone { get; set; }
             public IFormFile PhotoUrl { get; set; }
-            public int AddressId { get; set; }
+            public string Zipcode { get; set; }
+            public string AddressStreet { get; set; }
+            public string AddressStreetNumber { get; set; }
+            public string AddressDistrict { get; set; }
+            public string AddressState { get; set; }
+            public string AddressComplement { get; set; }
+            public string AddressCity { get; set; }
         }
         public class Handler : IRequestHandler<Command, StandardResult<object>>
         {
@@ -69,7 +75,7 @@ namespace Application.Aggregates.Client.Commands
                 
                     var entity = _mapper.Map<Command, Domain.Entities.Client>(request);
 
-                    //faz o upload da foto do user)
+                    //faz o upload da foto do cliente
                     if (request.PhotoUrl != null)
                     {
                         string photoUuid = Guid.NewGuid().ToString("N");
@@ -82,8 +88,11 @@ namespace Application.Aggregates.Client.Commands
                             await _fileStorage.DeleteFileFromUrl(entity.PhotoUrl);
                         }
                     }
+                    
+                    if (!string.IsNullOrEmpty(photoUrl))
+                        entity.PhotoUrl = photoUrl;
 
-                    await _clientRepository.Create(entity);
+                    await _clientRepository.Update(entity);
 
                 }
                 catch (Exception)

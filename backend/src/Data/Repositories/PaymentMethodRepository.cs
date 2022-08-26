@@ -41,12 +41,14 @@ namespace Data.Repositories
 
         public async Task<PaymentMethod> Read(int id)
         {
-            return await _context.PaymentMethods.FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.PaymentMethods
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<IList<PaymentMethod>> ReadAll()
         {
-            return await _context.PaymentMethods.ToListAsync();
+            return await _context.PaymentMethods
+                .ToListAsync();
         }
 
         public async Task Update(PaymentMethod paymentMethod)
@@ -56,7 +58,6 @@ namespace Data.Repositories
             if (res == null)
                 return;
 
-            //atributos do PaymentMethod
             res.Name = paymentMethod.Name;
             res.Description = paymentMethod.Description;
 

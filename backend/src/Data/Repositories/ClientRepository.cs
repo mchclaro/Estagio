@@ -23,7 +23,8 @@ namespace Data.Repositories
 
         public async Task Delete(int id)
         {
-            var client = await _context.Clients.FirstOrDefaultAsync(c => c.Id == id);
+            var client = _context.Clients.OrderBy(e => e.Id)
+                                         .Include(c => c.Address).FirstOrDefault(x => x.Id == id);
 
             if (client == null)
                 return;
@@ -47,12 +48,34 @@ namespace Data.Repositories
 
         public async Task<Client> Read(int id)
         {
-            return await _context.Clients.FirstOrDefaultAsync(c => c.Id == id);
+            var res = await _context.Clients
+                .Include(x => x.Address)
+                .Select(x => new Client
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Phone = x.Phone,
+                    PhotoUrl = x.PhotoUrl,
+                    Address = new Address
+                    {
+                        Street = x.Address.Street,
+                        StreetNumber = x.Address.StreetNumber,
+                        ZipCode = x.Address.ZipCode,
+                        Complement = x.Address.Complement,
+                        District = x.Address.District,
+                        City = x.Address.City,
+                        State = x.Address.State
+                    },
+                }).FirstOrDefaultAsync(x => x.Id == id);
+
+            return res;
         }
 
         public async Task<IList<Client>> ReadAll()
         {
-            return await _context.Clients.ToListAsync();
+            return await _context.Clients
+                .Include(a => a.Address)
+                .ToListAsync();
         }
 
         public async Task Update(Client client)

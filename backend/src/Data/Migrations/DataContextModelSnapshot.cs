@@ -31,29 +31,36 @@ namespace Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Complement")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("District")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Street")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("StreetNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("StreetNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("ZipCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Address");
+                    b.ToTable("Address", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
@@ -68,15 +75,12 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataHeld")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EstimateId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -89,9 +93,7 @@ namespace Data.Migrations
                     b.HasIndex("EstimateId")
                         .IsUnique();
 
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("Appointment");
+                    b.ToTable("Appointment", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.AppointmentPayment", b =>
@@ -106,10 +108,12 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DatePayment")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<bool>("IsSignal")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<int>("PaymentMethodId")
                         .HasColumnType("int");
@@ -126,7 +130,7 @@ namespace Data.Migrations
 
                     b.HasIndex("PaymentMethodId");
 
-                    b.ToTable("AppointmentPayment");
+                    b.ToTable("AppointmentPayment", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Client", b =>
@@ -137,14 +141,16 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AddressId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
@@ -153,7 +159,7 @@ namespace Data.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("Client");
+                    b.ToTable("Client", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Estimate", b =>
@@ -168,16 +174,16 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
+                    b.Property<string>("Service")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ValidateDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<decimal>("Value")
                         .HasColumnType("decimal(18,2)");
@@ -186,9 +192,7 @@ namespace Data.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("Estimate");
+                    b.ToTable("Estimate", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.PaymentMethod", b =>
@@ -203,11 +207,12 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentMethod");
+                    b.ToTable("PaymentMethod", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Report", b =>
@@ -233,26 +238,7 @@ namespace Data.Migrations
 
                     b.HasIndex("AppointmentPaymentId");
 
-                    b.ToTable("Report");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Service", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RequestedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Service");
+                    b.ToTable("Report", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Timetable", b =>
@@ -263,17 +249,17 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Break")
-                        .HasColumnType("datetime2");
+                    b.Property<decimal>("Break")
+                        .HasColumnType("decimal(20,0)");
 
                     b.Property<int>("DayOfWeek")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
+                    b.Property<decimal>("End")
+                        .HasColumnType("decimal(20,0)");
 
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
+                    b.Property<decimal>("Start")
+                        .HasColumnType("decimal(20,0)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -282,7 +268,7 @@ namespace Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Timetable");
+                    b.ToTable("Timetable", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -294,16 +280,23 @@ namespace Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
@@ -313,48 +306,40 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
                 {
                     b.HasOne("Domain.Entities.Client", "Client")
-                        .WithMany("Appointment")
+                        .WithMany("Appointments")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Estimate", "Estimate")
                         .WithOne("Appointment")
                         .HasForeignKey("Domain.Entities.Appointment", "EstimateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Service", "Service")
-                        .WithMany("Appointment")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Client");
 
                     b.Navigation("Estimate");
-
-                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("Domain.Entities.AppointmentPayment", b =>
                 {
                     b.HasOne("Domain.Entities.Appointment", "Appointment")
-                        .WithMany("AppointmentPayment")
+                        .WithMany("AppointmentPayments")
                         .HasForeignKey("AppointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.PaymentMethod", "PaymentMethod")
-                        .WithMany("AppointmentPayment")
+                        .WithMany("AppointmentPayments")
                         .HasForeignKey("PaymentMethodId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Appointment");
@@ -365,7 +350,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Domain.Entities.Client", b =>
                 {
                     b.HasOne("Domain.Entities.Address", "Address")
-                        .WithMany("Client")
+                        .WithMany("Clients")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -376,34 +361,26 @@ namespace Data.Migrations
             modelBuilder.Entity("Domain.Entities.Estimate", b =>
                 {
                     b.HasOne("Domain.Entities.Client", "Client")
-                        .WithMany("Estimate")
+                        .WithMany("Estimates")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Service", "Service")
-                        .WithMany("Estimate")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Client");
-
-                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("Domain.Entities.Report", b =>
                 {
                     b.HasOne("Domain.Entities.Appointment", "Appointment")
-                        .WithMany("Report")
+                        .WithMany("Reports")
                         .HasForeignKey("AppointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.AppointmentPayment", "AppointmentPayment")
-                        .WithMany("Report")
+                        .WithMany("Reports")
                         .HasForeignKey("AppointmentPaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Appointment");
@@ -414,9 +391,9 @@ namespace Data.Migrations
             modelBuilder.Entity("Domain.Entities.Timetable", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
-                        .WithMany("Timetable")
+                        .WithMany("Timetables")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -424,26 +401,26 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.Address", b =>
                 {
-                    b.Navigation("Client");
+                    b.Navigation("Clients");
                 });
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
                 {
-                    b.Navigation("AppointmentPayment");
+                    b.Navigation("AppointmentPayments");
 
-                    b.Navigation("Report");
+                    b.Navigation("Reports");
                 });
 
             modelBuilder.Entity("Domain.Entities.AppointmentPayment", b =>
                 {
-                    b.Navigation("Report");
+                    b.Navigation("Reports");
                 });
 
             modelBuilder.Entity("Domain.Entities.Client", b =>
                 {
-                    b.Navigation("Appointment");
+                    b.Navigation("Appointments");
 
-                    b.Navigation("Estimate");
+                    b.Navigation("Estimates");
                 });
 
             modelBuilder.Entity("Domain.Entities.Estimate", b =>
@@ -453,19 +430,17 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.PaymentMethod", b =>
                 {
-                    b.Navigation("AppointmentPayment");
+                    b.Navigation("AppointmentPayments");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Service", b =>
+            modelBuilder.Entity("Domain.Entities.Timetable", b =>
                 {
-                    b.Navigation("Appointment");
-
-                    b.Navigation("Estimate");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
-                    b.Navigation("Timetable");
+                    b.Navigation("Timetables");
                 });
 #pragma warning restore 612, 618
         }

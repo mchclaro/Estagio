@@ -41,12 +41,12 @@ namespace Application.Aggregates.Client.Commands
 
                 var client = await _clientRepository.Read(request.Id);
 
-                await _fileStorage.DeleteFileFromUrl(client.PhotoUrl);
-
-                await _clientRepository.Delete(request.Id);
+                if(client.PhotoUrl != null)
+                {
+                    await _fileStorage.DeleteFileFromUrl(client.PhotoUrl);
+                }
                 
-                result.AddError(Code.Ok, "Cliente excluído com sucesso.");
-
+                await _clientRepository.Delete(request.Id);
                 return result.GetResult();
             }
         }

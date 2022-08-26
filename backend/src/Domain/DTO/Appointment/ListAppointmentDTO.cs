@@ -23,5 +23,20 @@ namespace Domain.DTO.Appointment
         
         [NotMapped]
         public int[] PaymentMethodIds { get; set; }
+
+        public class ClientDTO 
+        {
+            public string Name { get; set; }
+            public string PhotoUrl { get; set; }
+            public string Phone { get; set; }
+        }
+
+        public class EstimateDTO 
+        {
+            public string Service { get; set; }
+            public string Description { get; set; }
+            public decimal Value { get; set; }
+            public DateTime ValidateDate { get; set; }
+        }
     }
 }

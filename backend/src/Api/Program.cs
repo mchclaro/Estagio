@@ -53,10 +53,8 @@ builder.Services.AddControllers()
                 {
                     options.SerializerSettings.Converters.Add(new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy HH:mm" });
                 });
-// builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+                
 builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
-// var assembly = AppDomain.CurrentDomain.Load("Domain");
-// builder.Services.AddMediatR(assembly);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

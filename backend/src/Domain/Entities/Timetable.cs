@@ -15,5 +15,6 @@ namespace Domain.Entities
         public Weekday DayOfWeek { get; set; }
         public int UserId { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }
