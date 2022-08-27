@@ -14,7 +14,6 @@ namespace Data.Context
         public DbSet<Estimate> Estimates { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Report> Reports { get; set; }
-        public DbSet<Timetable> Timetables { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

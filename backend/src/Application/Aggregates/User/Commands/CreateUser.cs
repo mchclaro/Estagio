@@ -20,14 +20,8 @@ namespace backend.src.Application.Aggregates.User.Commands
             public string Phone { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
-            public bool IsActive { get; set; }
             public IFormFile PhotoUrl { get; set; }
             public Role Role { get; set; }
-            public ulong Start { get; set; }
-            public ulong End { get; set; }
-            public ulong Break { get; set; }
-            public Weekday DayOfWeek { get; set; }
-            public string Timetable { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
@@ -41,20 +35,17 @@ namespace backend.src.Application.Aggregates.User.Commands
         public class Handler : IRequestHandler<Command, StandardResult<object>>
         {
             private readonly IUserRepository _userRepository;
-            private readonly ITimetableRepository _timetableRepository;
             private readonly IFileStorageService _fileStorage;
             private readonly IConfiguration _configuration;
             private readonly IMapper _mapper;
             private readonly string _imageBucket;
 
             public Handler(IUserRepository userRepository,
-                           ITimetableRepository timetableRepository,
                            IFileStorageService fileStorage,
                            IConfiguration configuration,
                            IMapper mapper)
             {
                 _userRepository = userRepository;
-                _timetableRepository = timetableRepository;
                 _fileStorage = fileStorage;
                 _configuration = configuration;
                 _mapper = mapper;
@@ -64,7 +55,6 @@ namespace backend.src.Application.Aggregates.User.Commands
             public async Task<StandardResult<object>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var result = new StandardResult<object> { };
-                string photoUrl = "";
 
                 try
                 {
@@ -91,45 +81,54 @@ namespace backend.src.Application.Aggregates.User.Commands
                     {
                         result.AddError(Code.BadRequest, "A senha do usuario não pode ser vazia.");
                         return result.GetResult();
+                    }                
+                    
+                    (bool fileSizeExceeded, string photoUrl) = await updateUserPhotoUrl(request);
+
+                    if (fileSizeExceeded)
+                    {
+                        result.AddError(Code.BadRequest, photoUrl);
+                        return result.GetResult();
                     }
 
-                    var entity = _mapper.Map<Command, Domain.Entities.User>(request);                 
-                    
-                    //faz o upload da foto do user)
-                    if (request.PhotoUrl != null)
-                    {
-                        string photoUuid = Guid.NewGuid().ToString("N");
-                        string objectName = $"user_photo_{photoUuid}{Path.GetExtension(request.PhotoUrl.FileName)}";
-                        await _fileStorage.UploadFileFromHttpIFormFile(request.PhotoUrl, _imageBucket, objectName);
-                        photoUrl = _fileStorage.GetFileUrl(_imageBucket, objectName);
-                    }
+                    var entity = _mapper.Map<Command, Domain.Entities.User>(request); 
+
+                    if (!string.IsNullOrEmpty(photoUrl))
+                    entity.PhotoUrl = photoUrl;
 
                     var userId = await _userRepository.Create(entity);
-                    await generateTimeTables(request, userId);
                     
                 }
                 catch(Exception)
                 {
-                    if (string.IsNullOrEmpty(photoUrl))
-                    {
-                        await _fileStorage.DeleteFileFromUrl(photoUrl);
-                    }
-
                     result.AddError(Code.GenericError, "Erro ao cadastrar o usuário");
                 }
 
                 return result.GetResult();
             }
 
-            public async Task generateTimeTables(Command request, int userId)
+            private async Task<(bool, string)> updateUserPhotoUrl(Command request)
             {
-                var timeTableList = TimeTableHelper.ParseManyTimeTables(request.Timetable);
-                foreach (var timetable in timeTableList)
-                {
-                    timetable.UserId = userId;
+                string photoUrl = string.Empty;
+                bool fileSizeExceeded = false;
 
-                    await _timetableRepository.Create(timetable);
+                if (request.PhotoUrl is null)
+                    return (fileSizeExceeded, photoUrl);
+
+                if (!FileSizeValidationHelper.IsFileSizeAllowed(_configuration, request.PhotoUrl.Length))
+                {
+                    fileSizeExceeded = true;
+                    photoUrl = "O tamanho da foto excede o limite permitido. Selecione uma foto que possua no máximo 8MB de tamanho.";
+
+                    return (fileSizeExceeded, photoUrl);
                 }
+
+                string photoUuid = Guid.NewGuid().ToString("N");
+                string objectName = $"user_photo_{photoUuid}{Path.GetExtension(request.PhotoUrl.FileName)}";
+                await _fileStorage.UploadFileFromHttpIFormFile(request.PhotoUrl, _imageBucket, objectName);
+                photoUrl = _fileStorage.GetFileUrl(_imageBucket, objectName);
+
+                return (fileSizeExceeded, photoUrl);
             }
         }
     }

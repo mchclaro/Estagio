@@ -53,7 +53,7 @@ namespace Data.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     Role = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -81,28 +81,6 @@ namespace Data.Migrations
                         principalTable: "Address",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Timetable",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Start = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
-                    End = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
-                    Break = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
-                    DayOfWeek = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Timetable", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Timetable_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -251,10 +229,6 @@ namespace Data.Migrations
                 table: "Report",
                 column: "AppointmentPaymentId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Timetable_UserId",
-                table: "Timetable",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -262,8 +236,6 @@ namespace Data.Migrations
             migrationBuilder.DropTable(
                 name: "Report");
 
-            migrationBuilder.DropTable(
-                name: "Timetable");
 
             migrationBuilder.DropTable(
                 name: "AppointmentPayment");

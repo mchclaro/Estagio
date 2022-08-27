@@ -37,6 +37,7 @@ namespace Data.EntityConfigurations
             
             builder.Property(e => e.IsActive)
                 .IsRequired()
+                .HasDefaultValue(true)
                 .HasColumnType("bit");
            
             builder.Property(e => e.Role)

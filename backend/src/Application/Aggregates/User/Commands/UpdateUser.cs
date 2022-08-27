@@ -26,10 +26,6 @@ namespace backend.src.Application.Aggregates.User.Commands
             public bool IsActive { get; set; }
             public IFormFile PhotoUrl { get; set; }
             public Role Role { get; set; }
-            public ulong Start { get; set; }
-            public ulong End { get; set; }
-            public ulong Break { get; set; }
-            public Weekday DayOfWeek { get; set; }
         }
         public class Handler : IRequestHandler<Command, StandardResult<object>>
         {
@@ -90,11 +86,11 @@ namespace backend.src.Application.Aggregates.User.Commands
 
                     var entity = _mapper.Map<Command, Domain.Entities.User>(request);
 
-                    //faz o upload da foto do user)
+                    //faz o upload da foto do user
                     if (request.PhotoUrl != null)
                     {
                         string photoUuid = Guid.NewGuid().ToString("N");
-                        string objectName = $"blog_photo_{photoUuid}{Path.GetExtension(request.PhotoUrl.FileName)}";
+                        string objectName = $"client_photo_{photoUuid}{Path.GetExtension(request.PhotoUrl.FileName)}";
                         await _fileStorage.UploadFileFromHttpIFormFile(request.PhotoUrl, _imageBucket, objectName);
                         photoUrl = _fileStorage.GetFileUrl(_imageBucket, objectName);
 
@@ -103,6 +99,9 @@ namespace backend.src.Application.Aggregates.User.Commands
                             await _fileStorage.DeleteFileFromUrl(entity.PhotoUrl);
                         }
                     }
+
+                    if (!string.IsNullOrEmpty(photoUrl))
+                        entity.PhotoUrl = photoUrl;
 
                     await _userRepository.Update(request.Id, entity);
                     

@@ -258,36 +258,6 @@ namespace Data.Migrations
                     b.ToTable("Service");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Timetable", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("Break")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DayOfWeek")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Timetable");
-                });
-
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -414,17 +384,6 @@ namespace Data.Migrations
                     b.Navigation("AppointmentPayment");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Timetable", b =>
-                {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithMany("Timetable")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Domain.Entities.Address", b =>
                 {
                     b.Navigation("Client");
@@ -464,11 +423,6 @@ namespace Data.Migrations
                     b.Navigation("Appointment");
 
                     b.Navigation("Estimate");
-                });
-
-            modelBuilder.Entity("Domain.Entities.User", b =>
-                {
-                    b.Navigation("Timetable");
                 });
 #pragma warning restore 612, 618
         }

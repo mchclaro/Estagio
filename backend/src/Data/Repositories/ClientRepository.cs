@@ -23,8 +23,9 @@ namespace Data.Repositories
 
         public async Task Delete(int id)
         {
-            var client = _context.Clients.OrderBy(e => e.Id)
-                                         .Include(c => c.Address).FirstOrDefault(x => x.Id == id);
+            var client = _context.Clients
+                                .Include(c => c.Address)
+                                .FirstOrDefault(x => x.Id == id);
 
             if (client == null)
                 return;
@@ -80,7 +81,7 @@ namespace Data.Repositories
 
         public async Task Update(Client client)
         {
-            var cli = await _context.Clients.FirstOrDefaultAsync(c => c.Id == client.Id);
+            var cli = await _context.Clients.FindAsync(client.Id);
             if (cli != null)
             {
                 cli.Name = client.Name;
@@ -88,7 +89,7 @@ namespace Data.Repositories
                 cli.PhotoUrl = client.PhotoUrl;
             }
 
-            var address = await _context.Address.FirstOrDefaultAsync(c => c.Id == client.Id);
+            var address = await _context.Address.FindAsync(cli.AddressId);
             if (address != null)
             {
                 address.Street = client.Address.Street;

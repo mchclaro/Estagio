@@ -28,7 +28,6 @@ namespace Api.Configurations
             services.AddScoped<IEstimateRepository, EstimateRepository>();
             services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
             services.AddScoped<IReportsRepository, ReportsRepository>();
-            services.AddScoped<ITimetableRepository, TimetableRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddTransient<IFileStorageService, LocalStorageService>();

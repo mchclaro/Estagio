@@ -57,7 +57,6 @@ namespace Data.Repositories
         public async Task<User> Read(int id)
         {
             var res = await _context.Users
-                .Include(x => x.Timetables)
                 .Select(x => new User
                 {
                     Id = x.Id,
@@ -66,14 +65,9 @@ namespace Data.Repositories
                     Email = x.Email,
                     PhotoUrl = x.PhotoUrl,
                     Role = x.Role,
-                    Timetable = new Timetable
-                    {
-                        Start = x.Timetable.Start,
-                        End = x.Timetable.End,
-                        Break = x.Timetable.Break,
-                        DayOfWeek = x.Timetable.DayOfWeek
-                    },
-                }).FirstOrDefaultAsync(c => c.Id == id);
+                    IsActive = x.IsActive
+                }).Where(x => x.IsActive == true)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             return res;
         }
@@ -81,7 +75,7 @@ namespace Data.Repositories
         public async Task<IList<User>> ReadAll()
         {
             return await _context.Users
-                .Include(x => x.Timetable)
+                .Where(x => x.IsActive == true)
                 .ToListAsync();
         }
 
@@ -96,16 +90,6 @@ namespace Data.Repositories
                 res.Email = user.Email;
                 res.PhotoUrl = user.PhotoUrl;
                 res.IsActive = user.IsActive;
-            }
-
-            var timetable = await _context.Timetables.FirstOrDefaultAsync(c => c.Id == user.Id);
-
-            if (timetable != null)
-            {
-                timetable.Start = user.Timetable.Start;
-                timetable.End = user.Timetable.End;
-                timetable.Break = user.Timetable.Break;
-                timetable.DayOfWeek = user.Timetable.DayOfWeek;
             }
 
             await _context.SaveChangesAsync();

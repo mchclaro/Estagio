@@ -241,36 +241,6 @@ namespace Data.Migrations
                     b.ToTable("Report", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.Timetable", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<decimal>("Break")
-                        .HasColumnType("decimal(20,0)");
-
-                    b.Property<int>("DayOfWeek")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("End")
-                        .HasColumnType("decimal(20,0)");
-
-                    b.Property<decimal>("Start")
-                        .HasColumnType("decimal(20,0)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Timetable", (string)null);
-                });
-
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -388,17 +358,6 @@ namespace Data.Migrations
                     b.Navigation("AppointmentPayment");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Timetable", b =>
-                {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithMany("Timetables")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Domain.Entities.Address", b =>
                 {
                     b.Navigation("Clients");
@@ -431,16 +390,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Domain.Entities.PaymentMethod", b =>
                 {
                     b.Navigation("AppointmentPayments");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Timetable", b =>
-                {
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Domain.Entities.User", b =>
-                {
-                    b.Navigation("Timetables");
                 });
 #pragma warning restore 612, 618
         }
