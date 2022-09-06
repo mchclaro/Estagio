@@ -1,7 +1,18 @@
+.text_logo {
+    color: #000000;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight:bold;
+}
+
+.text_logo:hover{
+    color: #000000;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
-    background-color: #BEBEBE;
+    background-color: #19589B;
     padding: 1em;
 }
 
@@ -19,10 +30,10 @@
 }
 
 .item a {
-    color: #ff0000;
+    color: #000000;
     text-decoration: none;
 }
 
 .item a:hover {
-  color: #000;
+  color: #ffffff;
 }

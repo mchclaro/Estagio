@@ -1,4 +1,5 @@
 import { FaFacebook, FaInstagram } from 'react-icons/fa'
+import { SiGmail } from 'react-icons/si'
 
 import styles from './Footer.module.css'
 
@@ -13,9 +14,12 @@ export default function Footer() {
                 <li>
                     <FaInstagram />
                 </li>
+                <li>
+                    <SiGmail />
+                </li>
             </ul>
             <p className={styles.copy_right}>
-                <span>OF Reparos e Manutenções</span> &copy; 2022
+                <span>OF REPAROS E MANUTENÇÃO &copy; 2022</span>  
             </p>
         </footer>
     );

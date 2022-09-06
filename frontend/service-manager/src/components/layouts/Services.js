@@ -1,13 +1,11 @@
 import styles from './Services.module.css'
-import { useRef } from 'react';
-import logo from '../../assets/logo.png'
 import pintura from '../../assets/pintura.jpg'
-import background from '../../assets/background.jpg'
+import background from '../../assets/background.png'
 
 
 export default function Services() {
     return (
-        <section>
+        <section className={styles.section}>
             <div class={styles.wrapper}>
                 <div className={styles.title}>
                     <h1>Pintura</h1>

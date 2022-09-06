@@ -7,9 +7,9 @@ export default function Menu() {
   return (
     <nav className={styles.navbar}>
       <Container>
-          <Link to="/" className="navbar-brand text-uppercase">
+          <Link to="/" className={styles.text_logo}>
             <img src={logo} alt="logo" width="120" height="120" />
-            <strong>OF Reparos e Manutenção</strong>
+            OF REPAROS E MANUTENÇÃO
           </Link>
           <ul className={styles.list}>
             <li className={styles.item}>

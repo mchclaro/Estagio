@@ -21,7 +21,7 @@
 }
 .form_style_10 h1{
     font-size: 50px;
-	background: #2A88AD;
+	background: #19589B;
 	padding: 20px 30px 15px 30px;
 	margin: -30px -30px 30px -30px;
 	border-radius: 10px 10px 0 0;
@@ -32,12 +32,13 @@
 	-moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
 	-webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
 	box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
-	border: 1px solid #257C9E;
+	border: 1px solid #19589B;
 }
 .form_style_10 h1 > span{
 	display: block;
 	margin-top: 2px;
-	font: 13px Arial, Helvetica, sans-serif;
+	font: 17px Arial, Helvetica, sans-serif;
+	text-align: center;
 }
 .form_style_10 label{
 	display: block;
@@ -120,7 +121,7 @@
 }
 
 .button_enviar {
-  background-color: #2A88AD;
+  background-color: #19589B;
   border-radius: 8px;
   border-style: none;
   box-sizing: border-box;
@@ -149,5 +150,5 @@
 
 .button_enviar:hover,
 .button_enviar:focus {
-  background-color: #257C9E;
+  background-color: #144881;
 }
