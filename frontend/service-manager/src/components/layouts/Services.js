@@ -1,14 +1,20 @@
 import styles from './Services.module.css'
 import pintura from '../../assets/pintura.jpg'
-import background from '../../assets/background.png'
+import eletrico from '../../assets/eletrico.jpg'
+import hidraulica from '../../assets/hidraulica.jpg'
+import alvenaria from '../../assets/alvenaria.jpg'
+import reparos from '../../assets/reparos.jpg'
+import serralheria from '../../assets/serralheria.jpg'
 
 
 export default function Services() {
     return (
         <section className={styles.section}>
+            <a id="services"></a>
+
             <div class={styles.wrapper}>
                 <div className={styles.title}>
-                    <h1>Pintura</h1>
+                    <h1><span>Pintura</span></h1>
                 </div>
                 <div class={styles.product_img}>
                     <img src={pintura} alt="pintura" width="530" height="400" />
@@ -17,46 +23,46 @@ export default function Services() {
 
             <div class={styles.wrapper}>
                 <div className={styles.title}>
-                    <h1>Pintura</h1>
+                    <h1><span>Elétrico</span></h1>
                 </div>
                 <div class={styles.product_img}>
-                    <img src={background} alt="pintura" width="530" height="400" />
+                    <img src={eletrico} alt="eletrico" width="530" height="400" />
                 </div>
             </div>
 
             <div class={styles.wrapper}>
                 <div className={styles.title}>
-                    <h1>Pintura</h1>
+                    <h1><span>Hidráulica</span></h1>
                 </div>
                 <div class={styles.product_img}>
-                    <img src={background} alt="pintura" width="530" height="400" />
+                    <img src={hidraulica} alt="hidraulica" width="530" height="400" />
                 </div>
             </div>
 
             <div class={styles.wrapper}>
                 <div className={styles.title}>
-                    <h1>Pintura</h1>
+                    <h1><span>Alvenaria</span></h1>
                 </div>
                 <div class={styles.product_img}>
-                    <img src={pintura} alt="pintura" width="530" height="400" />
+                    <img src={alvenaria} alt="alvenaria" width="530" height="400" />
                 </div>
             </div>
 
             <div class={styles.wrapper}>
                 <div className={styles.title}>
-                    <h1>Pintura</h1>
+                    <h1><span>Pequenos Reparos</span></h1>
                 </div>
                 <div class={styles.product_img}>
-                    <img src={background} alt="pintura" width="530" height="400" />
+                    <img src={reparos} alt="reparos" width="530" height="400" />
                 </div>
             </div>
 
             <div class={styles.wrapper}>
                 <div className={styles.title}>
-                    <h1>Pintura</h1>
+                    <h1><span>Serralheria</span></h1>
                 </div>
                 <div class={styles.product_img}>
-                    <img src={background} alt="pintura" width="530" height="400" />
+                    <img src={serralheria} alt="serralheria" width="530" height="400" />
                 </div>
             </div>
 

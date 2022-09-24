@@ -1,69 +1,72 @@
-// using System;
-// using System.Collections.Generic;
-// using System.Linq;
-// using System.Threading.Tasks;
-// using Domain.Interfaces.Services;
-// using Microsoft.AspNetCore.Http;
+using Amazon.Runtime;
+using Amazon.S3;
+using Amazon.S3.Model;
+using Amazon.S3.Transfer;
+using Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
 
-// namespace Infrastructure.FileService
-// {
-//     public class CloudStorageService : IFileStorageService
-//     {
-//         private readonly StorageClient _storage;
+namespace Infrastructure.FileService
+{
+    public class CloudStorageService : IFileStorageServiceS3
+    {
+        public string AwsKeyID { get; set; }
+        public string AwsKeySecret { get; set; }
+        public BasicAWSCredentials AWSCredentials { get; private set; }
+        private readonly IAmazonS3 _awsS3Client;
+        private const string BucketName = "service-manager-estagio";
 
-//         private readonly string _baseUrl;
+        public CloudStorageService()
+        {
+            AwsKeyID = "AKIAXLC2NDNZSM7ZKL6S";
+            AwsKeySecret = "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";
+            AWSCredentials = new BasicAWSCredentials(AwsKeyID, AwsKeySecret);
+            var config = new AmazonS3Config
+            {
+                RegionEndpoint = Amazon.RegionEndpoint.USEast1
+            };
+            _awsS3Client = new AmazonS3Client(AWSCredentials, config);
+        }
 
-//         public CloudStorageService()
-//         {
-//             //aqui seria o da aws s3
-//             _storage = StorageClient.Create();
-//             _baseUrl = "https://storage.googleapis.com/";
-//         }
+        public async Task<bool> UploadFileFromHttpIFormFile(string bucket, string key, IFormFile file)
+        {
+            using var newMemoryStream = new MemoryStream();
+            file.CopyTo(newMemoryStream);
 
-//         public async Task DeleteFile(string bucket, string objectName)
-//         {
-//             await _storage.DeleteObjectAsync(bucket, objectName);
-//         }
+            var fileTransferUtility = new TransferUtility(_awsS3Client);
 
-//         public async Task DeleteFileFromUrl(string url)
-//         {
-//             (string bucket, string objectName) = GetBucketAndNameFromUrl(url);
-//             await DeleteFile(bucket, objectName);
-//         }
+            await fileTransferUtility.UploadAsync(new TransferUtilityUploadRequest
+            {
+                InputStream = newMemoryStream,
+                Key = key,
+                BucketName = bucket,
+                ContentType = file.ContentType
+            });
 
-//         public string GetFileUrl(string bucket, string objectName)
-//         {
-//             return $"{_baseUrl}{bucket}/{objectName}";
-//         }
+            return true;
+        }
 
-//         public async Task UploadFile(Stream stream, string bucket, string objectName)
-//         {
-//             await _storage.UploadObjectAsync(bucket, objectName, null, stream);
-//         }
+        public string GetFileUrlS3(string fileName)
+        {
+            var request = new GetPreSignedUrlRequest()
+            {
+                BucketName = BucketName,
+                Key = fileName,
+                Expires = DateTime.UtcNow.AddMinutes(5),
+            };
 
-//         public async Task UploadFileFromHttpIFormFile(IFormFile file, string bucket, string objectName)
-//         {
-//             using (var stream = file.OpenReadStream())
-//             {
-//                 await UploadFile(stream, bucket, objectName);
-//             }
-//         }
+            return _awsS3Client.GetPreSignedURL(request);
+        }
 
-//         public async Task<byte[]> GetFileFromStorage(string bucket, string objectName)
-//         {
-//             using (var stream = new MemoryStream())
-//             {
-//                 await _storage.DownloadObjectAsync(bucket, objectName, stream);
+        public async Task DeleteFileFromUrlS3(string url)
+        {
+            var response = await _awsS3Client.DeleteObjectAsync(BucketName, url);
+            // var response = new DeleteObjectRequest
+            // {
+            //     BucketName = BucketName,
+            //     Key = url
+            // };
 
-//                 return stream.ToArray();
-//             }
-//         }
-
-//         private (string bucket, string objectName) GetBucketAndNameFromUrl(string url)
-//         {
-//             url = url.Replace(_baseUrl, "");
-//             var split = url.Split("/");
-//             return (split[0], string.Join("/", split.Skip(1)));
-//         }
-//     }
-// }
+            // await _awsS3Client.DeleteObjectAsync(response);
+        }
+    }
+}

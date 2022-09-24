@@ -14,7 +14,7 @@ function Home() {
                     <h4>Pintura, hidráulica, alvenaria e pequenos reparos.</h4>
             </section>
             <We />
-            {/* <Services /> */}
+            <Services />
             <Estimates />
             <Footer />
         </>
