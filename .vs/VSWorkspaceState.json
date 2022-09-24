@@ -6,12 +6,12 @@
     "\\backend\\src\\Application",
     "\\backend\\src\\Application\\Aggregates",
     "\\backend\\src\\Application\\Aggregates\\Client",
-    "\\backend\\src\\Application\\Aggregates\\Client\\Queries",
+    "\\backend\\src\\Application\\Aggregates\\Client\\Commands",
     "\\backend\\src\\Domain",
-    "\\backend\\src\\Domain\\DTO",
-    "\\backend\\src\\Domain\\DTO\\Client",
-    "\\backend\\src\\Domain\\Utils"
+    "\\backend\\src\\Domain\\Entities",
+    "\\backend\\src\\Infrastructure",
+    "\\backend\\src\\Infrastructure\\FileService"
   ],
-  "SelectedNode": "\\backend\\src\\Data\\Context\\DataContext.cs",
+  "SelectedNode": "\\backend\\src\\Infrastructure\\FileService\\S3AmazonStorageService.cs",
   "PreviewInSolutionExplorer": false
 }

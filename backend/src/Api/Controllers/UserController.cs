@@ -8,7 +8,7 @@ using Application.Aggregates.User.Queries;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UserController : BaseController
     {   
         /// <summary>

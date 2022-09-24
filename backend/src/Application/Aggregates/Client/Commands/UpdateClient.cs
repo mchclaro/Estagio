@@ -29,20 +29,20 @@ namespace Application.Aggregates.Client.Commands
         public class Handler : IRequestHandler<Command, StandardResult<object>>
         {
             private readonly IClientRepository _clientRepository;
-            private readonly IFileStorageService _fileStorage;
+            private readonly IFileStorageServiceS3 _fileStorage;
             private readonly IConfiguration _configuration;
             private readonly IMapper _mapper;
-            private readonly string _imageBucket;
+            private readonly string bucket;
 
             public Handler(IClientRepository clientRepository,
                            IConfiguration configuration,
-                           IMapper mapper, IFileStorageService fileStorage)
+                           IMapper mapper, IFileStorageServiceS3 fileStorage)
             {
                 _clientRepository = clientRepository;
                 _configuration = configuration;
                 _mapper = mapper;
                 _fileStorage = fileStorage;
-                _imageBucket = "adp-images";
+                bucket = "service-manager-estagio";
             }
             public async Task<StandardResult<object>> Handle(Command request, CancellationToken cancellationToken)
             {
@@ -75,20 +75,21 @@ namespace Application.Aggregates.Client.Commands
                 
                     var entity = _mapper.Map<Command, Domain.Entities.Client>(request);
 
-                    //faz o upload da foto do cliente
+                    //faz o upload da foto do cliente s3
+
                     if (request.PhotoUrl != null)
                     {
                         string photoUuid = Guid.NewGuid().ToString("N");
-                        string objectName = $"client_photo_{photoUuid}{Path.GetExtension(request.PhotoUrl.FileName)}";
-                        await _fileStorage.UploadFileFromHttpIFormFile(request.PhotoUrl, _imageBucket, objectName);
-                        photoUrl = _fileStorage.GetFileUrl(_imageBucket, objectName);
+                        string objectName = $"business_photo_{photoUuid}{Path.GetExtension(request.PhotoUrl.FileName)}";
+                        await _fileStorage.UploadFileFromHttpIFormFile(bucket, objectName, request.PhotoUrl);
+                        photoUrl = _fileStorage.GetFileUrlS3(objectName);
 
                         if (!string.IsNullOrEmpty(entity.PhotoUrl) && entity.PhotoUrl != photoUrl)
                         {
-                            await _fileStorage.DeleteFileFromUrl(entity.PhotoUrl);
+                            await _fileStorage.DeleteFileFromUrlS3(entity.PhotoUrl);
                         }
                     }
-                    
+
                     if (!string.IsNullOrEmpty(photoUrl))
                         entity.PhotoUrl = photoUrl;
 
@@ -97,11 +98,6 @@ namespace Application.Aggregates.Client.Commands
                 }
                 catch (Exception)
                 {
-                    if (string.IsNullOrEmpty(photoUrl))
-                    {
-                        await _fileStorage.DeleteFileFromUrl(photoUrl);
-                    }
-
                     result.AddError(Code.GenericError, "Erro ao atualizar cliente");
                 }
 

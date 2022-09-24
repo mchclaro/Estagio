@@ -37,6 +37,7 @@ builder.Services.AddScoped<IReportsRepository, ReportsRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddTransient<IFileStorageService, LocalStorageService>();
+builder.Services.AddTransient<IFileStorageServiceS3, CloudStorageService>();
 
 // builder.Services.AddScoped<IMediator, Mediator>();
 builder.Services.AddScoped<Mediator>();

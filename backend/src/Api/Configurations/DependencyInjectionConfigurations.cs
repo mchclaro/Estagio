@@ -31,6 +31,7 @@ namespace Api.Configurations
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddTransient<IFileStorageService, LocalStorageService>();
+            services.AddTransient<IFileStorageServiceS3, CloudStorageService>();
 
             services.AddScoped<Mediator>();
 

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.Result;
 using AutoMapper;
 using Domain.Entities;
@@ -31,26 +27,27 @@ namespace Application.Aggregates.Client.Commands
         {
             private readonly IClientRepository _clientRepository;
             private readonly IAddressRepository _addressRepository;
-            private readonly IFileStorageService _fileStorage;
+            private readonly IFileStorageServiceS3 _fileStorage;
             private readonly IConfiguration _configuration;
             private readonly IMapper _mapper;
-            private readonly string _imageBucket;
+            private readonly string bucket;
 
             public Handler(IClientRepository clientRepository,
                            IAddressRepository addressRepository,
                            IConfiguration configuration,
-                           IMapper mapper, IFileStorageService fileStorage)
+                           IMapper mapper, IFileStorageServiceS3 fileStorage)
             {
                 _clientRepository = clientRepository;
                 _addressRepository = addressRepository;
                 _configuration = configuration;
                 _mapper = mapper;
                 _fileStorage = fileStorage;
-                _imageBucket = "adp-images";
+                bucket = "service-manager-estagio";
             }
             public async Task<StandardResult<object>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var result = new StandardResult<object> { };
+                string photoUrl = "";
 
                 try
                 {
@@ -71,18 +68,24 @@ namespace Application.Aggregates.Client.Commands
                         return result.GetResult();
                     }
 
-                    (bool fileSizeExceeded, string photoUrl) = await updateClientPhotoUrl(request);
-
-                    if (fileSizeExceeded)
-                    {
-                        result.AddError(Code.BadRequest, photoUrl);
-                        return result.GetResult();
-                    }
-
                     var entity = _mapper.Map<Command, Domain.Entities.Client>(request);
 
+                    //teste upload de foto com s3
+                    if (request.PhotoUrl != null)
+                    {
+                        string photoUuid = Guid.NewGuid().ToString("N");
+                        string objectName = $"client_photo_{photoUuid}{Path.GetExtension(request.PhotoUrl.FileName)}";
+                        await _fileStorage.UploadFileFromHttpIFormFile(bucket, objectName, request.PhotoUrl);
+                        photoUrl = _fileStorage.GetFileUrlS3(objectName);
+
+                        if (!string.IsNullOrEmpty(entity.PhotoUrl) && entity.PhotoUrl != photoUrl)
+                        {
+                            await _fileStorage.DeleteFileFromUrlS3(entity.PhotoUrl);
+                        }
+                    }
+
                     if (!string.IsNullOrEmpty(photoUrl))
-                    entity.PhotoUrl = photoUrl;
+                        entity.PhotoUrl = photoUrl;
 
                     entity.AddressId = await saveAddress(request);
 
@@ -112,29 +115,29 @@ namespace Application.Aggregates.Client.Commands
                 return await _addressRepository.Create(address);
             }
 
-            private async Task<(bool, string)> updateClientPhotoUrl(Command request)
-            {
-                string photoUrl = string.Empty;
-                bool fileSizeExceeded = false;
+            // private async Task<(bool, string)> updateClientPhotoUrl(Command request)
+            // {
+            //     string photoUrl = string.Empty;
+            //     bool fileSizeExceeded = false;
 
-                if (request.PhotoUrl is null)
-                    return (fileSizeExceeded, photoUrl);
+            //     if (request.PhotoUrl is null)
+            //         return (fileSizeExceeded, photoUrl);
 
-                if (!FileSizeValidationHelper.IsFileSizeAllowed(_configuration, request.PhotoUrl.Length))
-                {
-                    fileSizeExceeded = true;
-                    photoUrl = "O tamanho da foto excede o limite permitido. Selecione uma foto que possua no máximo 8MB de tamanho.";
+            //     if (!FileSizeValidationHelper.IsFileSizeAllowed(_configuration, request.PhotoUrl.Length))
+            //     {
+            //         fileSizeExceeded = true;
+            //         photoUrl = "O tamanho da foto excede o limite permitido. Selecione uma foto que possua no máximo 8MB de tamanho.";
 
-                    return (fileSizeExceeded, photoUrl);
-                }
+            //         return (fileSizeExceeded, photoUrl);
+            //     }
 
-                string photoUuid = Guid.NewGuid().ToString("N");
-                string objectName = $"client_photo_{photoUuid}{Path.GetExtension(request.PhotoUrl.FileName)}";
-                await _fileStorage.UploadFileFromHttpIFormFile(request.PhotoUrl, _imageBucket, objectName);
-                photoUrl = _fileStorage.GetFileUrl(_imageBucket, objectName);
+            //     string photoUuid = Guid.NewGuid().ToString("N");
+            //     string objectName = $"client_photo_{photoUuid}{Path.GetExtension(request.PhotoUrl.FileName)}";
+            //     await _fileStorage.UploadFileFromHttpIFormFile(request.PhotoUrl, _imageBucket, objectName);
+            //     photoUrl = _fileStorage.GetFileUrl(_imageBucket, objectName);
 
-                return (fileSizeExceeded, photoUrl);
-            }
+            //     return (fileSizeExceeded, photoUrl);
+            // }
         }
     }
 }
