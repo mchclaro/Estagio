@@ -1,44 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from "react";
 
 const initialEstimate = {
   id: 0,
-  description: '',
-  service: '',
-  value: '',
-  validateDate: '',
-  client: ''
+  descricao: '',
+  servico: '',
+  valor: '',
+  datavalidade: '',
+  cliente: ''
 }
 
 
-
 export default function EstimateForm(props) {
-  const [estimate, setEstimate] = useState(currentEstimate());
-
+  const [estimate, setEstimate] = useState(estimateAtual());
 
   useEffect(() => {
-    if (props.estimateSelected.id !== 0)
-      setEstimate(props.estimateSelected);
-  }, [props.estimateSelected]);
+    if (props.estSelecionado.id !== 0)
+      setEstimate(props.estSelecionado);
+  }, [props.estSelecionado]);
 
   const inputTextHandler = (e) => {
     const { name, value } = e.target;
 
     setEstimate({ ...estimate, [name]: value })
-  }
-
-  function currentEstimate() {
-    if (props.estimateSelected.id !== 0) {
-      return props.estimateSelected;
-    }
-    else {
-      return initialEstimate;
-    }
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (props.estimateSelected.id !== 0)
+    if (props.estSelecionado.id !== 0)
       props.updateEstimate(estimate)
     else
       props.addEstimate(estimate);
@@ -53,16 +42,23 @@ export default function EstimateForm(props) {
     setEstimate(initialEstimate);
   }
 
+  function estimateAtual() {
+    if (props.estSelecionado.id !== 0) {
+      return props.estSelecionado;
+    }
+    else {
+      return initialEstimate;
+    }
+  }
+
   return (
     <>
-      <form className='row g-3' onSubmit={handleSubmit}>
+      <form className="row g-3" onSubmit={handleSubmit}>
         <div className="col-md-6">
-          <label className="form-label">Descrição</label>
+          <label className="form-label">Descricao</label>
           <input
-            name="description"
-            value={estimate.description}
-            onChange={inputTextHandler}
-            id="description"
+            name="descricao"
+            id="descricao"
             type="text"
             className="form-control"
           />
@@ -72,9 +68,8 @@ export default function EstimateForm(props) {
           <label className="form-label">Serviço</label>
           <input
             name="service"
-            value={estimate.service}
-            onChange={inputTextHandler}
             id="service"
+            onChange={inputTextHandler}
             type="text"
             className="form-control"
           />
@@ -84,7 +79,6 @@ export default function EstimateForm(props) {
           <label className="form-label">Valor</label>
           <input
             name="value"
-            value={estimate.value}
             onChange={inputTextHandler}
             id="value"
             type="text"
@@ -96,7 +90,6 @@ export default function EstimateForm(props) {
           <label className="form-label">Data de Validade</label>
           <input
             name="validateDate"
-            value={estimate.validateDate}
             onChange={inputTextHandler}
             id="validateDate"
             type="date"
@@ -108,7 +101,6 @@ export default function EstimateForm(props) {
           <label className="form-label">Cliente</label>
           <input
             name="client"
-            value={estimate.client}
             onChange={inputTextHandler}
             id="client"
             type="text"
@@ -116,34 +108,15 @@ export default function EstimateForm(props) {
           />
           <br />
         </div>
-
+        <hr />
         <div className="col-12 mt-0">
-          {
-            estimate.id === 0 ?
-              <button
-                className="btn btn-outline-success position: relative"
-                type='submit'
-              >
-                Salvar
-              </button>
-              :
-              <>
-                <button
-                  className="btn btn-outline-success position: relative me-2"
-                  type='submit'
-                >
-                  Salvar
-                </button>
-                <button
-                  className="btn btn-outline-warning position: relative me-2"
-                  onClick={handleCancel}
-                >
-                  Cancelar
-                </button>
-              </>
-          }
+          <button
+            className="btn btn-outline-success position: relative"
+            type='submit'
+          >
+            Salvar
+          </button>
         </div>
-
       </form>
     </>
   )

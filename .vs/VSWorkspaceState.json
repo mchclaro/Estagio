@@ -3,6 +3,8 @@
     "",
     "\\backend",
     "\\backend\\src",
+    "\\backend\\src\\Api",
+    "\\backend\\src\\Api\\Controllers",
     "\\backend\\src\\Application",
     "\\backend\\src\\Application\\Aggregates",
     "\\backend\\src\\Application\\Aggregates\\Client",
@@ -12,6 +14,6 @@
     "\\backend\\src\\Infrastructure",
     "\\backend\\src\\Infrastructure\\FileService"
   ],
-  "SelectedNode": "\\backend\\src\\Infrastructure\\FileService\\S3AmazonStorageService.cs",
+  "SelectedNode": "\\backend\\src\\Api\\Controllers\\ClientController.cs",
   "PreviewInSolutionExplorer": false
 }
