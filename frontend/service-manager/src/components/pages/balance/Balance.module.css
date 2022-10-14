@@ -1,0 +1,12 @@
+.table_responsive {
+    text-align: center;
+    padding: 2px 25px;
+    overflow-x: auto;
+    margin: 30px;
+    font-weight: bold;
+  }
+  
+  .table_responsive thead th {
+    background-color: #00509d;
+    color: white;
+  }

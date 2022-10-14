@@ -2,8 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "react-bootstrap";
 import styles from './Appointment.module.css'
-import { PencilSimple, Trash, Plus, CheckCircle, XCircle } from 'phosphor-react'
-import api from "../../../api/servicemanager";
+import { PencilSimple, Plus } from 'phosphor-react'
 
 export default function Appointment() {
 
@@ -20,13 +19,21 @@ export default function Appointment() {
   };
 
   const addAppointment = async () => {
+    appointmentSelected.status=parseInt(appointmentSelected.status);
+    appointmentSelected.clientId=parseInt(appointmentSelected.clientId);
+    appointmentSelected.estimateId=parseInt(appointmentSelected.estimateId);
     handleAppointmentModal();
     const response = await axios.post(`${baseUrl}create`, appointmentSelected)
     setData([...data, response.data.data]);
+    console.log(data);
   };
 
   // const  addAppointment = async () => {
   //   delete appointmentSelected.id;
+  //   appointmentSelected.status=parseInt(appointmentSelected.status);
+  //   appointmentSelected.clientId=parseInt(appointmentSelected.clientId);
+  //   appointmentSelected.estimateId=parseInt(appointmentSelected.estimateId);
+
   //   await axios.post(`${baseUrl}create`, appointmentSelected)
   //   .then(response => {
   //     setData(data.concat(response.data.data));
@@ -46,15 +53,23 @@ export default function Appointment() {
     handleAppointmentModal();
   };
 
-  const handleConfirmModal = (id) => {
-    if (id !== 0 && id !== undefined) {
-      const appoint = data.filter((c) => c.id === id);
-      setAppointment(appoint[0]);
-    } else {
-      setAppointment({ id: 0 });
-    }
-    setSmshowConfirmModal(!smshowConfirmModal);
+  const updateAppointment = async (c) => {
+    handleAppointmentModal();
+    const response = await axios.put(`${baseUrl}update`, appointmentSelected)
+    const { id } = response.data;
+    setData(data.map((item) => (item.id === id ? response.data : item)));
+    setAppointment({ id: 0 });
   };
+
+  // const handleConfirmModal = (id) => {
+  //   if (id !== 0 && id !== undefined) {
+  //     const appoint = data.filter((c) => c.id === id);
+  //     setAppointment(appoint[0]);
+  //   } else {
+  //     setAppointment({ id: 0 });
+  //   }
+  //   setSmshowConfirmModal(!smshowConfirmModal);
+  // };
 
   const [appointmentSelected, setAppointmentSelected] = useState({
     id: '',
@@ -81,13 +96,13 @@ export default function Appointment() {
     })
   };
 
-  const deleteAppointment = async (id) => {
-    handleConfirmModal(0);
-    if (await api.delete(`Appointment/delete/${id}`)) {
-      const clientsFilter = data.filter((c) => c.id !== id);
-      setData([...clientsFilter]);
-    }
-  };
+  // const deleteAppointment = async (id) => {
+  //   handleConfirmModal(0);
+  //   if (await api.delete(`Appointment/delete/${id}`)) {
+  //     const clientsFilter = data.filter((c) => c.id !== id);
+  //     setData([...clientsFilter]);
+  //   }
+  // };
 
   // const addAppointment = async () => {
   //   delete appointmentSelected.id;
@@ -153,12 +168,6 @@ export default function Appointment() {
                     >
                       <PencilSimple size={18} weight="bold" />
                     </button>
-                    <button
-                      className="btn btn-sm btn-outline-danger me-2"
-                      onClick={() => handleConfirmModal(app.id)}
-                    >
-                      <Trash size={18} weight="bold" />
-                    </button>
                   </td>
                 </tr>
               )}
@@ -183,10 +192,10 @@ export default function Appointment() {
             <div className="col-md-6">
               <label className="form-label">Data Realizada</label>
               <input
-                name="dataheld"
+                name="dataHeld"
                 onChange={handleChange}
-                id="dataheld"
-                type="date"
+                id="dataHeld"
+                type="text"
                 className="form-control"
               />
             </div>
@@ -201,9 +210,9 @@ export default function Appointment() {
                 className="form-select"
               >
                 <option defaultValue="Não definido">Selecionar</option>
-                <option value="Canceled">Cancelado</option>
-                <option value="Pending">Pendente</option>
-                <option value="Concluded">Concluído</option>
+                <option value="1">Cancelado</option>
+                <option value="2">Pendente</option>
+                <option value="3">Concluído</option>
               </select>
               <br />
             </div>
@@ -252,7 +261,7 @@ export default function Appointment() {
           </ModalFooter>
         </Modal>
 
-        <Modal size="sm" show={smshowConfirmModal} onHide={handleConfirmModal}>
+        {/* <Modal size="sm" show={smshowConfirmModal} onHide={handleConfirmModal}>
           <Modal.Header closeButton>
             <Modal.Title>Excluir Agendamento</Modal.Title>
           </Modal.Header>
@@ -274,7 +283,7 @@ export default function Appointment() {
               <XCircle size={20} weight="bold" />
             </button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
       </div>
     </>
   )

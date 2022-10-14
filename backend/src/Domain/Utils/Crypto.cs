@@ -25,5 +25,9 @@ namespace Domain.Utils
 
             return hash;
         }
+        public static bool ComparePasswords(string input, string hash)
+        {
+            return BCrypt.Net.BCrypt.Verify(input, hash);
+        }
     }
 }

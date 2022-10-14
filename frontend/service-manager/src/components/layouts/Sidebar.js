@@ -14,7 +14,7 @@ export default function Sidebar(props) {
         </div>
         <ul className="nav-links">
           <li>
-            <div className="iocn-link">
+            <div className="icon-link">
               <Link to="">
                 <i><BsFillCalendar2Fill /></i>
                 <span className="link_name">Agendamento</span>
@@ -27,7 +27,7 @@ export default function Sidebar(props) {
             </ul>
           </li>
           <li>
-            <div className="iocn-link">
+            <div className="icon-link">
               <Link to="">
                 <i><BsFillFileEarmarkTextFill /></i>
                 <span className="link_name">Orçamentos</span>
@@ -36,11 +36,11 @@ export default function Sidebar(props) {
             <ul className="sub-menu">
               <li><Link to="/" className="link_name">Orçamentos</Link></li>
               <li><Link to="/estimate/list">Ver todos</Link></li>
-              <li><Link to="">Novo Orçamentos</Link></li>
+              <li><Link to="/estimate/new">Novo Orçamento</Link></li>
             </ul>
           </li>
           <li>
-            <div className="iocn-link">
+            <div className="icon-link">
               <Link to="">
                 <i><BsFillPersonFill /></i>
                 <span className="link_name">Clientes</span>
@@ -53,7 +53,7 @@ export default function Sidebar(props) {
             </ul>
           </li>
           <li>
-            <div className="iocn-link">
+            <div className="icon-link">
               <Link to="">
                 <i> <BsFileBarGraphFill /></i>
                 <span className="link_name">Relatórios</span>
@@ -61,11 +61,11 @@ export default function Sidebar(props) {
             </div>
             <ul className="sub-menu">
               <li><Link to="/" className="link_name">Relatórios</Link></li>
-              <li><Link to="">Gerar Relatórios</Link></li>
+              <li><Link to="/report">Gerar Relatórios</Link></li>
             </ul>
           </li>
           <li>
-            <div className="iocn-link">
+            <div className="icon-link">
               <Link to="">
                 <i><RiMoneyDollarCircleFill /></i>
                 <span className="link_name">Saldo</span>
@@ -73,11 +73,11 @@ export default function Sidebar(props) {
             </div>
             <ul className="sub-menu">
               <li><Link to="/" className="link_name" href="#">Saldo</Link></li>
-              <li><Link to="">Consultar Saldo</Link></li>
+              <li><Link to="/balance">Consultar Saldo</Link></li>
             </ul>
           </li>
           <li>
-            <div className="iocn-link">
+            <div className="icon-link">
               <Link to="">
                 <i><RiSettings5Fill /></i>
                 <span className="link_name">Configurações</span>

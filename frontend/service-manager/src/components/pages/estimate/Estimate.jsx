@@ -2,7 +2,7 @@ import axios from "axios";
 import { Plus } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "react-bootstrap";
-import api from "../../../api/servicemanager";
+import Sidebar from "../../layouts/Sidebar";
 import styles from './Estimate.module.css'
 
 export default function Estimate(props) {
@@ -15,7 +15,6 @@ export default function Estimate(props) {
 
   const newEstimate = () => {
     setEstimate({ id: 0 });
-    handleEstimateModal();
   };
 
   const addEstimate = async (c) => {
@@ -62,6 +61,9 @@ export default function Estimate(props) {
   return (
     <>
       <div className={styles.container}>
+        <Sidebar
+        newEstimate={newEstimate}
+        />
         <h3>Orçamentos</h3>
         <div className="form-outline" style={{ width: "500px" }}>
           <input type="search" id="form1" className="form-control" placeholder="Buscar orçamento" aria-label="Search" />
@@ -107,7 +109,7 @@ export default function Estimate(props) {
       <Modal size="lg" show={showEstimateModal} onHide={handleEstimateModal}>
         <ModalHeader> Adicionar Orçamento </ModalHeader>
         <ModalBody>
-        <div className="col-md-6">
+          <div className="col-md-6">
             <label className="form-label">Serviço</label>
             <input
               name="service"
