@@ -5,10 +5,14 @@ import hidraulica from '../../assets/hidraulica.jpg'
 import alvenaria from '../../assets/alvenaria.jpg'
 import reparos from '../../assets/reparos.jpg'
 import serralheria from '../../assets/serralheria.jpg'
+import Menu from './Menu'
+import Footer from './Footer'
 
 
 export default function Services() {
     return (
+        <>
+        <Menu />
         <section className={styles.section}>
             <a id="services"></a>
 
@@ -67,5 +71,7 @@ export default function Services() {
             </div>
 
         </section>
+        <Footer />
+        </>
     );
 }

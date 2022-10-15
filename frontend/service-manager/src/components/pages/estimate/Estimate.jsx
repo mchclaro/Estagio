@@ -15,6 +15,7 @@ export default function Estimate(props) {
 
   const newEstimate = () => {
     setEstimate({ id: 0 });
+    handleEstimateModal();
   };
 
   const addEstimate = async (c) => {
@@ -60,10 +61,9 @@ export default function Estimate(props) {
 
   return (
     <>
+      <Sidebar />
+      <div className="container">
       <div className={styles.container}>
-        <Sidebar
-        newEstimate={newEstimate}
-        />
         <h3>Orçamentos</h3>
         <div className="form-outline" style={{ width: "500px" }}>
           <input type="search" id="form1" className="form-control" placeholder="Buscar orçamento" aria-label="Search" />
@@ -186,6 +186,7 @@ export default function Estimate(props) {
           </div>
         </ModalFooter>
       </Modal>
+      </div>
     </>
   );
 }

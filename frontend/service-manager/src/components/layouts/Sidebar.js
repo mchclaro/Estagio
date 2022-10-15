@@ -3,8 +3,9 @@ import { BsFillCalendar2Fill, BsFillPersonFill, BsFileBarGraphFill, BsFillFileEa
 import { RiMoneyDollarCircleFill, RiSettings5Fill } from 'react-icons/ri'
 import logo from '../../assets/logo.png'
 import { Link } from "react-router-dom";
+import Appointment from '../pages/appointment/Appointment';
 
-export default function Sidebar(props) {
+export default function Sidebar() {
   return (
     <>
       <div className="sidebar close">
@@ -21,9 +22,8 @@ export default function Sidebar(props) {
               </Link>
             </div>
             <ul className="sub-menu">
-              <li><Link to="/" className="link_name">Agendamento</Link></li>
+              <li><Link to="/painel" className="link_name">Agendamento</Link></li>
               <li><Link to="/appointment/list">Ver todos</Link></li>
-              <li><Link to="">Novo Agendamento</Link></li>
             </ul>
           </li>
           <li>
@@ -34,9 +34,8 @@ export default function Sidebar(props) {
               </Link>
             </div>
             <ul className="sub-menu">
-              <li><Link to="/" className="link_name">Orçamentos</Link></li>
+              <li><Link to="/painel" className="link_name">Orçamentos</Link></li>
               <li><Link to="/estimate/list">Ver todos</Link></li>
-              <li><Link to="/estimate/new">Novo Orçamento</Link></li>
             </ul>
           </li>
           <li>
@@ -47,9 +46,8 @@ export default function Sidebar(props) {
               </Link>
             </div>
             <ul className="sub-menu">
-              <li><Link to="/" className="link_name">Clientes</Link></li>
+              <li><Link to="/painel" className="link_name">Clientes</Link></li>
               <li><Link to="/client/list">Ver todos</Link></li>
-              <li><Link to="">Novo Cliente</Link></li>
             </ul>
           </li>
           <li>
@@ -60,7 +58,7 @@ export default function Sidebar(props) {
               </Link>
             </div>
             <ul className="sub-menu">
-              <li><Link to="/" className="link_name">Relatórios</Link></li>
+              <li><Link to="/painel" className="link_name">Relatórios</Link></li>
               <li><Link to="/report">Gerar Relatórios</Link></li>
             </ul>
           </li>
@@ -72,7 +70,7 @@ export default function Sidebar(props) {
               </Link>
             </div>
             <ul className="sub-menu">
-              <li><Link to="/" className="link_name" href="#">Saldo</Link></li>
+              <li><Link to="/painel" className="link_name" href="#">Saldo</Link></li>
               <li><Link to="/balance">Consultar Saldo</Link></li>
             </ul>
           </li>
@@ -84,8 +82,8 @@ export default function Sidebar(props) {
               </Link>
             </div>
             <ul className="sub-menu">
-              <li><Link to="/" className="link_name" href="#">Configurações</Link></li>
-              <li><Link to="">Perfil</Link></li>
+              <li><Link to="/painel" className="link_name" href="#">Configurações</Link></li>
+              <li><Link to="/user">Perfil</Link></li>
               <li><Link to="">Sair</Link></li>
             </ul>
           </li>

@@ -1,7 +1,11 @@
 import styles from './Estimates.module.css'
+import Footer from './Footer';
+import Menu from './Menu';
 
 export default function Estimates() {
     return (
+        <>
+        <Menu />
         <section>
             <div className={styles.form_style_10}>
                 <h1>Faça seu orçamento!<span>Preencha as informações abaixo e na mensagem informe qual serviço você gostaria!</span></h1>
@@ -31,5 +35,7 @@ export default function Estimates() {
                 </form>
             </div>
         </section>
+        <Footer />
+        </>
     );
 }

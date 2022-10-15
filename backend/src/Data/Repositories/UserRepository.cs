@@ -14,9 +14,9 @@ namespace Data.Repositories
             _context = context;
         }
 
-        public async Task ChangePassword(int id, string password)
+        public async Task ChangePassword(string email, string password)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
 
             if (user != null)
             {
@@ -68,6 +68,25 @@ namespace Data.Repositories
                     IsActive = x.IsActive
                 }).Where(x => x.IsActive == true)
                 .FirstOrDefaultAsync(c => c.Id == id);
+
+            return res;
+        }
+
+        public async Task<User> Login(string email)
+        {
+            var res = await _context.Users
+                .Select(x => new User
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Phone = x.Phone,
+                    Email = x.Email,
+                    Password = x.Password,
+                    PhotoUrl = x.PhotoUrl,
+                    Role = x.Role,
+                    IsActive = x.IsActive
+                }).Where(x => x.IsActive == true)
+                .FirstOrDefaultAsync(c => c.Email == email);
 
             return res;
         }

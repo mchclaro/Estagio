@@ -14,10 +14,10 @@ namespace Api.Controllers
         /// <summary>
         /// Autentica o login
         /// </summary>
-        // [HttpPost("auth")]
-        // public async Task<IActionResult> Authenticate([FromBody] LoginUser.Query query)
-        // {
-        //     return GetIActionResult(await Mediator.Send(query));
-        // }
+        [HttpPost("auth")]
+        public async Task<IActionResult> Authenticate([FromBody] LoginUser.Query query)
+        {
+            return GetIActionResult(await Mediator.Send(query));
+        }
     }
 }

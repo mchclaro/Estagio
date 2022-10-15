@@ -7,13 +7,13 @@ export default function Menu() {
   return (
     <nav className={styles.navbar}>
       <Container>
-          <Link to="/" className={styles.text_logo}>
+          <Link to="/home" className={styles.text_logo}>
             <img src={logo} alt="logo" width="120" height="120" />
             OF REPAROS E MANUTENÇÃO
           </Link>
           <ul className={styles.list}>
             <li className={styles.item}>
-              <Link to="/" className="nav-link active" aria-current="page" >Home</Link>
+              <Link to="/home" className="nav-link active" aria-current="page" >Home</Link>
             </li>
             <li className={styles.item}>
               <Link to="/services" className="nav-link" id="services">Serviços</Link>

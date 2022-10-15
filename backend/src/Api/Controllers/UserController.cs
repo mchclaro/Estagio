@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Application.Aggregates.User.Queries;
+using Application.Aggregates.User.Commands;
 
 namespace Api.Controllers
 {
@@ -11,6 +12,16 @@ namespace Api.Controllers
     [Route("[controller]")]
     public class UserController : BaseController
     {   
+        /// <summary>
+        /// Modifica a senha de um usuário
+        /// </summary>
+        [Authorize]
+        [HttpPost("changepassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePassword.Command command)
+        {
+            return GetIActionResult(await Mediator.Send(command));
+        }
+        
         /// <summary>
         /// Cria um usuario
         /// </summary>

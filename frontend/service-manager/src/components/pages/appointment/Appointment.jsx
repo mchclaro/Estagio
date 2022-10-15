@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "react-bootstrap";
 import styles from './Appointment.module.css'
 import { PencilSimple, Plus } from 'phosphor-react'
+import Sidebar from "../../layouts/Sidebar";
 
 export default function Appointment() {
 
@@ -19,13 +20,12 @@ export default function Appointment() {
   };
 
   const addAppointment = async () => {
-    appointmentSelected.status=parseInt(appointmentSelected.status);
-    appointmentSelected.clientId=parseInt(appointmentSelected.clientId);
-    appointmentSelected.estimateId=parseInt(appointmentSelected.estimateId);
+    appointmentSelected.status = parseInt(appointmentSelected.status);
+    appointmentSelected.clientId = parseInt(appointmentSelected.clientId);
+    appointmentSelected.estimateId = parseInt(appointmentSelected.estimateId);
     handleAppointmentModal();
     const response = await axios.post(`${baseUrl}create`, appointmentSelected)
     setData([...data, response.data.data]);
-    console.log(data);
   };
 
   // const  addAppointment = async () => {
@@ -121,6 +121,7 @@ export default function Appointment() {
 
   return (
     <>
+      <Sidebar />
       <div className="container">
         <div className={styles.container}>
           <h3>Agendamentos</h3>
@@ -173,7 +174,7 @@ export default function Appointment() {
               )}
             </tbody>
           </table>
-        </div >
+        </div>
 
         <Modal size="lg" show={showAppointmentModal} onHide={handleAppointmentModal}>
           <ModalHeader> Adicionar Agendamento </ModalHeader>
@@ -260,30 +261,6 @@ export default function Appointment() {
             </div>
           </ModalFooter>
         </Modal>
-
-        {/* <Modal size="sm" show={smshowConfirmModal} onHide={handleConfirmModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Excluir Agendamento</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Tem certeza que deseja excluir o agendamento {appointment.id}?
-          </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-between">
-            <button
-              className="btn btn-outline-success me-2"
-              onClick={() => deleteAppointment(appointment.id)}
-            >
-              <CheckCircle size={20} weight="bold" />
-            </button>
-
-            <button
-              className="btn btn-danger me-2"
-              onClick={() => handleConfirmModal(0)}
-            >
-              <XCircle size={20} weight="bold" />
-            </button>
-          </Modal.Footer>
-        </Modal> */}
       </div>
     </>
   )

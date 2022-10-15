@@ -1,7 +1,11 @@
+import Footer from './Footer';
+import Menu from './Menu';
 import styles from './We.module.css'
 
 export default function We() {
     return (
+        <>
+        <Menu />
         <section className={styles.section}>
             <div className={styles.container}>
                 <div className={styles.card}>
@@ -59,5 +63,7 @@ export default function We() {
                 </div>
             </div>
         </section>
+        <Footer />
+        </>
     );
 }

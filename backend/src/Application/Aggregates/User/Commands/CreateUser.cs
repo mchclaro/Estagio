@@ -115,13 +115,13 @@ namespace backend.src.Application.Aggregates.User.Commands
                 if (request.PhotoUrl is null)
                     return (fileSizeExceeded, photoUrl);
 
-                if (!FileSizeValidationHelper.IsFileSizeAllowed(_configuration, request.PhotoUrl.Length))
-                {
-                    fileSizeExceeded = true;
-                    photoUrl = "O tamanho da foto excede o limite permitido. Selecione uma foto que possua no máximo 8MB de tamanho.";
+                // if (!FileSizeValidationHelper.IsFileSizeAllowed(_configuration, request.PhotoUrl.Length))
+                // {
+                //     fileSizeExceeded = true;
+                //     photoUrl = "O tamanho da foto excede o limite permitido. Selecione uma foto que possua no máximo 8MB de tamanho.";
 
-                    return (fileSizeExceeded, photoUrl);
-                }
+                //     return (fileSizeExceeded, photoUrl);
+                // }
 
                 string photoUuid = Guid.NewGuid().ToString("N");
                 string objectName = $"user_photo_{photoUuid}{Path.GetExtension(request.PhotoUrl.FileName)}";
