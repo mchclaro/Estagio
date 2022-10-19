@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FznrLaFCkPqR+rFHrVS5ZUHSf3Rwd/YTia2HHTTvGk0hopqZow2lWkLvFriT6ZvB5CBN4pwqyUOfRxC9hKOKqA==",
+  "dgSpecHash": "As2WVyJROEWuPQgO8lR0PgnzRvJaZh4BOjlyk1xlpKqktolPjWbLC9B89iLGkHk8SQdSlicJ6k6XYnOK1cnh+w==",
   "success": true,
   "projectFilePath": "C:\\projetos\\Estagio\\backend\\src\\Api\\Api.csproj",
   "expectedPackageFiles": [
@@ -15,6 +15,7 @@
     "C:\\Users\\kikos\\.nuget\\packages\\excelnumberformat\\1.1.0\\excelnumberformat.1.1.0.nupkg.sha512",
     "C:\\Users\\kikos\\.nuget\\packages\\firebaseauthentication.net\\3.7.2\\firebaseauthentication.net.3.7.2.nupkg.sha512",
     "C:\\Users\\kikos\\.nuget\\packages\\firebasedatabase.net\\4.0.7\\firebasedatabase.net.4.0.7.nupkg.sha512",
+    "C:\\Users\\kikos\\.nuget\\packages\\fluentdatetime\\2.1.0\\fluentdatetime.2.1.0.nupkg.sha512",
     "C:\\Users\\kikos\\.nuget\\packages\\fluentscheduler\\5.5.1\\fluentscheduler.5.5.1.nupkg.sha512",
     "C:\\Users\\kikos\\.nuget\\packages\\fluentvalidation\\11.2.0\\fluentvalidation.11.2.0.nupkg.sha512",
     "C:\\Users\\kikos\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

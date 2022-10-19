@@ -20,7 +20,7 @@
 	margin-bottom: 15px;
 }
 .form_style_10 h1{
-    font-size: 50px;
+    font-size: 40px;
 	background: #19589B;
 	padding: 20px 30px 15px 30px;
 	margin: -30px -30px 30px -30px;
@@ -139,6 +139,7 @@
   outline: none;
   padding: 10px 16px;
   position: relative;
+  margin-left: 185px;
   text-align: center;
   text-decoration: none;
   transition: color 100ms;
@@ -147,6 +148,7 @@
   -webkit-user-select: none;
   touch-action: manipulation;
 }
+
 
 .button_enviar:hover,
 .button_enviar:focus {

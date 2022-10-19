@@ -6,6 +6,8 @@ using Data.Context;
 using Domain.Entities;
 using Domain.Filter;
 using Domain.Interfaces.Repositories;
+using FluentDate;
+using FluentDateTime;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
@@ -123,6 +125,42 @@ namespace Data.Repositories
             //         PaymentMethodId = id
             //     });
             // }
+        }
+
+        public async Task<IList<Appointment>> DailyReport()
+        {
+            return await _context.Appointments
+                    // ta com erro quando faz include nessas tabelas, não achei o problema ainda, já mapeei mas n resolveu
+                    // .Include(a => a.Client)
+                    // .Include(a => a.Estimate)
+                    // .Include(a => a.AppointmentPayments)
+                    .Where(x => x.DataHeld.Date == DateTime.Now.Date)
+                    .ToListAsync();
+        }
+
+        public async Task<IList<Appointment>> WeeklyReport()
+        {
+
+            DateTime date = DateTime.Now.Date.AddDays(-7);
+
+            return await _context.Appointments
+                    // ta com erro quando faz include nessas tabelas, não achei o problema ainda, já mapeei mas n resolveu
+                    // .Include(a => a.Client)
+                    // .Include(a => a.Estimate)
+                    // .Include(a => a.AppointmentPayments)
+                    .Where(x => x.DataHeld.Date >= date && x.DataHeld <= DateTime.Now.Date)
+                    .ToListAsync();
+        }
+
+        public async Task<IList<Appointment>> MonthReport()
+        {
+            return await _context.Appointments
+                    // ta com erro quando faz include nessas tabelas, não achei o problema ainda, já mapeei mas n resolveu
+                    // .Include(a => a.Client)
+                    // .Include(a => a.Estimate)
+                    // .Include(a => a.AppointmentPayments)
+                    .Where(x => x.DataHeld.Date.Month >= DateTime.Now.Date.Month)
+                    .ToListAsync();
         }
     }
 }

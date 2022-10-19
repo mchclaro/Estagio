@@ -510,6 +510,17 @@
           "lib/netstandard2.0/Firebase.dll": {}
         }
       },
+      "FluentDateTime/2.1.0": {
+        "runtime": {
+          "lib/net6.0/FluentDateTime.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/net6.0/FluentDateTime.dll": {}
+        }
+      },
       "FluentScheduler/5.5.1": {
         "runtime": {
           "lib/netstandard2.1/FluentScheduler.dll": {
@@ -3585,6 +3596,7 @@
       "Data/1.0.0": {
         "dependencies": {
           "Domain": "1.0.0",
+          "FluentDateTime": "2.1.0",
           "Microsoft.EntityFrameworkCore": "6.0.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.1",
           "Microsoft.Extensions.Configuration.FileExtensions": "6.0.0",
@@ -5444,6 +5456,13 @@
       "sha512": "sha512-yj8J5al66pCXRibNsK0K1wB1ZsPeCJCnwRVfwCcd6ZQ5tbwouObt0hgp+LmzKY90bLfQJuwmnLpKzVYGwD/6xA==",
       "path": "firebasedatabase.net/4.0.7",
       "hashPath": "firebasedatabase.net.4.0.7.nupkg.sha512"
+    },
+    "FluentDateTime/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SQ6TqHbvgTjz8sc371R/63ZBCr2Nwp8dsGEyGDRUISUGD3++tnEPpEEWoDhMOP6dzI1MzthzMMTPkC9qHvYz2g==",
+      "path": "fluentdatetime/2.1.0",
+      "hashPath": "fluentdatetime.2.1.0.nupkg.sha512"
     },
     "FluentScheduler/5.5.1": {
       "type": "package",

@@ -27,7 +27,7 @@ export default function Services() {
 
             <div class={styles.wrapper}>
                 <div className={styles.title}>
-                    <h1><span>Elétrico</span></h1>
+                    <h1><span>Elétrica</span></h1>
                 </div>
                 <div class={styles.product_img}>
                     <img src={eletrico} alt="eletrico" width="530" height="400" />
@@ -52,23 +52,7 @@ export default function Services() {
                 </div>
             </div>
 
-            <div class={styles.wrapper}>
-                <div className={styles.title}>
-                    <h1><span>Pequenos Reparos</span></h1>
-                </div>
-                <div class={styles.product_img}>
-                    <img src={reparos} alt="reparos" width="530" height="400" />
-                </div>
-            </div>
-
-            <div class={styles.wrapper}>
-                <div className={styles.title}>
-                    <h1><span>Serralheria</span></h1>
-                </div>
-                <div class={styles.product_img}>
-                    <img src={serralheria} alt="serralheria" width="530" height="400" />
-                </div>
-            </div>
+            
 
         </section>
         <Footer />

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "YI7BykguxszUrYwnQ8OigXOxi8/AYiNHJ3KSfWlY1QnLJiwbDKtIdiKl1nJhYvhjZSgIbFbMnj9xAs/dzNy+dQ==",
+  "dgSpecHash": "H+bMdc0mmUz1xYCpFqHEvHp93ewDrRY8fdkShdwA+Qrsg7uA68YMr38iqDQYlQ9dkdAV3eRpeGi6VOI2gNCMBw==",
   "success": true,
   "projectFilePath": "C:\\projetos\\Estagio\\backend\\src\\Application\\Application.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,7 @@
     "C:\\Users\\kikos\\.nuget\\packages\\excelnumberformat\\1.1.0\\excelnumberformat.1.1.0.nupkg.sha512",
     "C:\\Users\\kikos\\.nuget\\packages\\firebaseauthentication.net\\3.7.2\\firebaseauthentication.net.3.7.2.nupkg.sha512",
     "C:\\Users\\kikos\\.nuget\\packages\\firebasedatabase.net\\4.0.7\\firebasedatabase.net.4.0.7.nupkg.sha512",
+    "C:\\Users\\kikos\\.nuget\\packages\\fluentdatetime\\2.1.0\\fluentdatetime.2.1.0.nupkg.sha512",
     "C:\\Users\\kikos\\.nuget\\packages\\fluentscheduler\\5.5.1\\fluentscheduler.5.5.1.nupkg.sha512",
     "C:\\Users\\kikos\\.nuget\\packages\\fluentvalidation\\11.2.0\\fluentvalidation.11.2.0.nupkg.sha512",
     "C:\\Users\\kikos\\.nuget\\packages\\litedb\\4.1.4\\litedb.4.1.4.nupkg.sha512",

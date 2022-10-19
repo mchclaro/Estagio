@@ -9,6 +9,7 @@
       "Data/1.0.0": {
         "dependencies": {
           "Domain": "1.0.0",
+          "FluentDateTime": "2.1.0",
           "Microsoft.EntityFrameworkCore": "6.0.6",
           "Microsoft.EntityFrameworkCore.Design": "6.0.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.1",
@@ -25,6 +26,14 @@
           "lib/netstandard2.0/BCrypt.Net-Core.dll": {
             "assemblyVersion": "1.6.0.0",
             "fileVersion": "1.6.0.0"
+          }
+        }
+      },
+      "FluentDateTime/2.1.0": {
+        "runtime": {
+          "lib/net6.0/FluentDateTime.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -709,6 +718,13 @@
       "sha512": "sha512-hsKiHGjrnlDW05MzuzzlD9gNP8YOW2KbZ+FbvISrilsKJJ76tXKhWey6psZX5sd7DczNpSU2U6ldjPoblk8BLw==",
       "path": "bcrypt.net-core/1.6.0",
       "hashPath": "bcrypt.net-core.1.6.0.nupkg.sha512"
+    },
+    "FluentDateTime/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SQ6TqHbvgTjz8sc371R/63ZBCr2Nwp8dsGEyGDRUISUGD3++tnEPpEEWoDhMOP6dzI1MzthzMMTPkC9qHvYz2g==",
+      "path": "fluentdatetime/2.1.0",
+      "hashPath": "fluentdatetime.2.1.0.nupkg.sha512"
     },
     "Humanizer.Core/2.8.26": {
       "type": "package",

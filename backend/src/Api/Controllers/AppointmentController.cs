@@ -47,5 +47,33 @@ namespace Api.Controllers
         {
             return GetIActionResult(await Mediator.Send(new DetailsAppointment.Query { Id = id }));
         }
+
+        /// <summary>
+        /// Gera um relatório diário
+        /// </summary>
+        [HttpGet("report/daily")]
+        public async Task<IActionResult> DailyReport()
+        {
+            return GetIActionResult(await Mediator.Send(new DailyReport.Query { }));
+        }
+
+        /// <summary>
+        /// Gera um relatório dos últimos 7 dias
+        /// </summary>
+        [HttpGet("report/weekly")]
+        public async Task<IActionResult> WeeklyReport()
+        {
+            return GetIActionResult(await Mediator.Send(new WeeklyReport.Query { }));
+        }
+        
+        /// <summary>
+        /// Gera um relatório do mês
+        /// </summary>
+        [HttpGet("report/month")]
+        public async Task<IActionResult> MonthReport()
+        {
+            return GetIActionResult(await Mediator.Send(new MonthReport.Query { }));
+        }
+        
     }
 }

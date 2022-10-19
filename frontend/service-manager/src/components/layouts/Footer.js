@@ -1,6 +1,5 @@
 import { FaFacebook, FaInstagram } from 'react-icons/fa'
-import { SiGmail } from 'react-icons/si'
-
+import { SiGmail, SiWhatsapp } from 'react-icons/si'
 import styles from './Footer.module.css'
 
 
@@ -9,13 +8,13 @@ export default function Footer() {
         <footer className={styles.footer}>
             <ul className={styles.social_list}>
                 <li>
-                    <FaFacebook />
+                    <a href='https://pt-br.facebook.com/'>  <FaFacebook /> </a>
                 </li>
                 <li>
-                    <FaInstagram />
+                    <a href='https://criarmeulink.com.br/u/1666133772'> <SiGmail /> </a>
                 </li>
                 <li>
-                    <SiGmail />
+                    <a href='https://wa.link/pm3ssj'> <SiWhatsapp/>     </a>
                 </li>
             </ul>
             <p className={styles.copy_right}>

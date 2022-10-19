@@ -606,3 +606,4 @@ C:\projetos\Estagio\backend\src\Api\bin\Debug\net6.0\MediatR.Contracts.dll
 C:\projetos\Estagio\backend\src\Api\obj\Debug\net6.0\staticwebassets.build.json
 C:\projetos\Estagio\backend\src\Api\obj\Debug\net6.0\staticwebassets.development.json
 C:\projetos\Estagio\backend\src\Api\obj\Debug\net6.0\scopedcss\bundle\Api.styles.css
+C:\projetos\Estagio\backend\src\Api\bin\Debug\net6.0\FluentDateTime.dll

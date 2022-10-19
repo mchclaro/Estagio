@@ -12,10 +12,11 @@
   left: 0;
   height: 100%;
   width: 260px;
-  background: #19589B;
+  background: #00509d;
   z-index: 100;
   transition: all 0.5s ease;
 }
+
 .sidebar.close{
   width: 78px;
 }

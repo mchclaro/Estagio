@@ -12,6 +12,9 @@ namespace Domain.Interfaces.Repositories
         Task<int> Create(Appointment appointment);
         Task<Appointment> Read(int id);
         Task<IList<Appointment>> ReadAll();
+        Task<IList<Appointment>> DailyReport();
+        Task<IList<Appointment>> MonthReport();
+        Task<IList<Appointment>> WeeklyReport();
         Task Update(Appointment appointment);
         Task<bool> Exists(int id);
         Task<dynamic> GetAllAppointments(AppointmentFilter filter);

@@ -1,5 +1,5 @@
 .text_logo {
-    color: #000000;
+    color: #1C1C1C;
     text-decoration: none;
     font-size: 20px;
     font-weight:bold;
@@ -12,7 +12,7 @@
 .navbar {
     display: flex;
     justify-content: space-between;
-    background-color: #19589B;
+    background-color: #e7edef;
     padding: 1em;
 }
 
@@ -35,5 +35,5 @@
 }
 
 .item a:hover {
-  color: #ffffff;
+  color: #1b149a;
 }

@@ -8,7 +8,7 @@ export default function Estimates() {
         <Menu />
         <section>
             <div className={styles.form_style_10}>
-                <h1>Faça seu orçamento!<span>Preencha as informações abaixo e na mensagem informe qual serviço você gostaria!</span></h1>
+                <h1>⠀Faça seu orçamento!<span>Preencha as informações abaixo e na mensagem informe qual serviço você gostaria!</span></h1>
                 <form>
                     <div className="section">Nome</div>
                     <div className="inner-wrap">
@@ -38,4 +38,5 @@ export default function Estimates() {
         <Footer />
         </>
     );
+    
 }

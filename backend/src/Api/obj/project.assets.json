@@ -132,6 +132,15 @@
           "lib/netstandard2.0/Firebase.dll": {}
         }
       },
+      "FluentDateTime/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/FluentDateTime.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/FluentDateTime.dll": {}
+        }
+      },
       "FluentScheduler/5.5.1": {
         "type": "package",
         "compile": {
@@ -4103,6 +4112,7 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "Domain": "1.0.0",
+          "FluentDateTime": "2.1.0",
           "Microsoft.EntityFrameworkCore": "6.0.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.1",
           "Microsoft.Extensions.Configuration.FileExtensions": "6.0.0",
@@ -4363,6 +4373,22 @@
         "firebasedatabase.net.nuspec",
         "lib/netstandard2.0/Firebase.dll",
         "lib/netstandard2.0/Firebase.xml"
+      ]
+    },
+    "FluentDateTime/2.1.0": {
+      "sha512": "SQ6TqHbvgTjz8sc371R/63ZBCr2Nwp8dsGEyGDRUISUGD3++tnEPpEEWoDhMOP6dzI1MzthzMMTPkC9qHvYz2g==",
+      "type": "package",
+      "path": "fluentdatetime/2.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fluentdatetime.2.1.0.nupkg.sha512",
+        "fluentdatetime.nuspec",
+        "icon.png",
+        "lib/net6.0/FluentDateTime.dll",
+        "lib/net6.0/FluentDateTime.xml",
+        "lib/netstandard2.0/FluentDateTime.dll",
+        "lib/netstandard2.0/FluentDateTime.xml"
       ]
     },
     "FluentScheduler/5.5.1": {
