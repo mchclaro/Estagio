@@ -14,15 +14,9 @@ namespace Domain.DTO.Appointment
         public string Description { get; set; }
         public DateTime DataHeld { get; set; }
         public Status Status { get; set; }
-        public int EstimateId { get; set; }
-        public int ClientId { get; set; }
-        public virtual Domain.Entities.Estimate Estimate { get; set; }
-        public virtual Domain.Entities.Client Client { get; set; }
-        public virtual ICollection<AppointmentPayment> AppointmentPayments { get; set; }
-        public virtual ICollection<Report> Reports { get; set; }
-        
-        [NotMapped]
-        public int[] PaymentMethodIds { get; set; }
+        public virtual EstimateDTO Estimate { get; set; }
+        public virtual ClientDTO Client { get; set; }
+        public virtual ICollection<AppointmentPaymentDTO> AppointmentPayments { get; set; }
 
         public class ClientDTO 
         {
@@ -37,6 +31,15 @@ namespace Domain.DTO.Appointment
             public string Description { get; set; }
             public decimal Value { get; set; }
             public DateTime ValidateDate { get; set; }
+        }
+
+        public class AppointmentPaymentDTO 
+        {
+            public bool IsSignal { get; set; }
+            public DateTime DatePayment { get; set; }
+            public decimal Value { get; set; }
+            public PaymentStatus PaymentStatus { get; set; }
+            public string PaymentMethodName { get; set; }
         }
     }
 }

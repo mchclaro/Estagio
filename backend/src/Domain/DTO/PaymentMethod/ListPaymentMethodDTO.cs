@@ -11,6 +11,6 @@ namespace Domain.DTO.PaymentMethod
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<AppointmentPayment> AppointmentPayments { get; set; }
+        public virtual ICollection<Domain.Entities.AppointmentPayment> AppointmentPayments { get; set; }
     }
 }

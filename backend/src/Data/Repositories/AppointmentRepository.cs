@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Data.Context;
+using Domain.DTO.Appointment;
 using Domain.Entities;
 using Domain.Filter;
 using Domain.Interfaces.Repositories;
@@ -47,34 +48,26 @@ namespace Data.Repositories
                 .Include(a => a.Client)
                 .Include(a => a.Estimate)
                 .Include(a => a.AppointmentPayments)
+                .ThenInclude(a => a.PaymentMethod)
                 .Select(x => new Appointment
                 {
                     Id = x.Id,
                     Description = x.Description,
                     DataHeld = x.DataHeld,
                     Status = x.Status,
-                    //resolver problema aqui também, mesma coisa do ReadAll certeza
-                    // Client = new Client
-                    // {
-                    //     Name = x.Client.Name,
-                    //     Phone = x.Client.Phone,
-                    //     PhotoUrl = x.Client.PhotoUrl
-                    // },
-                    // Estimate = new Estimate
-                    // {
-                    //     Service = x.Estimate.Service,
-                    //     Description = x.Estimate.Description,
-                    //     Value = x.Estimate.Value,
-                    //     ValidateDate = x.Estimate.ValidateDate
-                    // },
-                    // AppointmentPayment = new AppointmentPayment
-                    // {
-                    //     IsSignal = x.AppointmentPayment.IsSignal,
-                    //     DatePayment = x.AppointmentPayment.DatePayment,
-                    //     Value = x.AppointmentPayment.Value,
-                    //     PaymentStatus = x.AppointmentPayment.PaymentStatus,
-                    //     PaymentMethodId = x.AppointmentPayment.PaymentMethodId
-                    // },
+                    Client = new Client
+                    {
+                        Name = x.Client.Name,
+                        Phone = x.Client.Phone,
+                        PhotoUrl = x.Client.PhotoUrl
+                    },
+                    Estimate = new Estimate
+                    {
+                        Service = x.Estimate.Service,
+                        Description = x.Estimate.Description,
+                        Value = x.Estimate.Value,
+                        ValidateDate = x.Estimate.ValidateDate
+                    },
                 }).FirstOrDefaultAsync(c => c.Id == id);
 
             return res;
@@ -83,10 +76,10 @@ namespace Data.Repositories
         public async Task<IList<Appointment>> ReadAll()
         {
             return await _context.Appointments
-                    // ta com erro quando faz include nessas tabelas, não achei o problema ainda, já mapeei mas n resolveu
-                    // .Include(a => a.Client)
-                    // .Include(a => a.Estimate)
-                    // .Include(a => a.AppointmentPayments)
+                    .Include(a => a.Client)
+                    .Include(a => a.Estimate)
+                    .Include(a => a.AppointmentPayments)
+                    .ThenInclude(a => a.PaymentMethod)
                     .ToListAsync();
         }
 
@@ -130,10 +123,9 @@ namespace Data.Repositories
         public async Task<IList<Appointment>> DailyReport()
         {
             return await _context.Appointments
-                    // ta com erro quando faz include nessas tabelas, não achei o problema ainda, já mapeei mas n resolveu
-                    // .Include(a => a.Client)
-                    // .Include(a => a.Estimate)
-                    // .Include(a => a.AppointmentPayments)
+                    .Include(a => a.Client)
+                    .Include(a => a.Estimate)
+                    .Include(a => a.AppointmentPayments)
                     .Where(x => x.DataHeld.Date == DateTime.Now.Date)
                     .ToListAsync();
         }
@@ -144,10 +136,9 @@ namespace Data.Repositories
             DateTime date = DateTime.Now.Date.AddDays(-7);
 
             return await _context.Appointments
-                    // ta com erro quando faz include nessas tabelas, não achei o problema ainda, já mapeei mas n resolveu
-                    // .Include(a => a.Client)
-                    // .Include(a => a.Estimate)
-                    // .Include(a => a.AppointmentPayments)
+                    .Include(a => a.Client)
+                    .Include(a => a.Estimate)
+                    .Include(a => a.AppointmentPayments)
                     .Where(x => x.DataHeld.Date >= date && x.DataHeld <= DateTime.Now.Date)
                     .ToListAsync();
         }
@@ -155,10 +146,10 @@ namespace Data.Repositories
         public async Task<IList<Appointment>> MonthReport()
         {
             return await _context.Appointments
-                    // ta com erro quando faz include nessas tabelas, não achei o problema ainda, já mapeei mas n resolveu
-                    // .Include(a => a.Client)
-                    // .Include(a => a.Estimate)
-                    // .Include(a => a.AppointmentPayments)
+                    .Include(a => a.Client)
+                    .Include(a => a.Estimate)
+                    .Include(a => a.AppointmentPayments)
+                    .ThenInclude(a => a.PaymentMethod)
                     .Where(x => x.DataHeld.Date.Month >= DateTime.Now.Date.Month)
                     .ToListAsync();
         }

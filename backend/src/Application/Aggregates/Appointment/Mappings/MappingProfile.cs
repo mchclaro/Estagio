@@ -32,7 +32,6 @@ namespace Application.Aggregates.Appointment.Mappings
             .ForMember(dest => dest.Description, src => src.MapFrom(src => src.Description))
             .ForMember(dest => dest.DataHeld, src => src.MapFrom(src => src.DataHeld))
             .ForMember(dest => dest.Status, src => src.MapFrom(src => src.Status))
-            .ForMember(dest => dest.PaymentMethodIds, src => src.MapFrom(src => src.PaymentMethodIds))
             .ForMember(dest => dest.Estimate, src => src.MapFrom(src => new ListAppointmentDTO.EstimateDTO
             {
                 Service = src.Estimate.Service,
@@ -45,7 +44,15 @@ namespace Application.Aggregates.Appointment.Mappings
                 Name = src.Client.Name,
                 PhotoUrl = src.Client.PhotoUrl,
                 Phone = src.Client.Phone
-            }));
+            }))
+            .ForMember(dest => dest.AppointmentPayments, src => src.MapFrom(src => src.AppointmentPayments.Select(x => new ListAppointmentDTO.AppointmentPaymentDTO
+            {
+                IsSignal = x.IsSignal,
+                DatePayment = x.DatePayment,
+                Value = x.Value,
+                PaymentStatus = x.PaymentStatus,
+                PaymentMethodName = x.PaymentMethod.Name
+            }).ToList()));
         }
     }
 }

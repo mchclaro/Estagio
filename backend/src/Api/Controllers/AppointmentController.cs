@@ -74,6 +74,5 @@ namespace Api.Controllers
         {
             return GetIActionResult(await Mediator.Send(new MonthReport.Query { }));
         }
-        
     }
 }

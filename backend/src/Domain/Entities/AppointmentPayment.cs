@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Enums;
@@ -13,6 +14,10 @@ namespace Domain.Entities
         public DateTime DatePayment { get; set; }
         public decimal Value { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
+        [NotMapped]
+        public string PaymentMethodName { get; set; }
+        [NotMapped]
+        public int Numbers { get; set; }
         public int AppointmentId { get; set; }
         public int PaymentMethodId { get; set; }
         public virtual Appointment Appointment { get; set; }
