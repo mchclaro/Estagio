@@ -21,12 +21,12 @@ namespace Domain.DTO.Appointment
         public class ClientDTO 
         {
             public string Name { get; set; }
-            public string PhotoUrl { get; set; }
             public string Phone { get; set; }
         }
 
         public class EstimateDTO 
         {
+            public int Id { get; set; }
             public string Service { get; set; }
             public string Description { get; set; }
             public decimal Value { get; set; }

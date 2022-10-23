@@ -34,6 +34,7 @@ namespace Application.Aggregates.Appointment.Mappings
             .ForMember(dest => dest.Status, src => src.MapFrom(src => src.Status))
             .ForMember(dest => dest.Estimate, src => src.MapFrom(src => new ListAppointmentDTO.EstimateDTO
             {
+                Id = src.Estimate.Id,
                 Service = src.Estimate.Service,
                 Description = src.Estimate.Description,
                 Value = src.Estimate.Value,
@@ -42,7 +43,6 @@ namespace Application.Aggregates.Appointment.Mappings
             .ForMember(dest => dest.Client, src => src.MapFrom(src => new ListAppointmentDTO.ClientDTO
             {
                 Name = src.Client.Name,
-                PhotoUrl = src.Client.PhotoUrl,
                 Phone = src.Client.Phone
             }))
             .ForMember(dest => dest.AppointmentPayments, src => src.MapFrom(src => src.AppointmentPayments.Select(x => new ListAppointmentDTO.AppointmentPaymentDTO

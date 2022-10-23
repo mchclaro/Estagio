@@ -16,6 +16,11 @@ namespace Domain.DTO.Estimate
         public DateTime ValidateDate { get; set; }
         public int ClientId { get; set; }
         public virtual Domain.Entities.Appointment Appointment { get; set; }
-        public virtual Domain.Entities.Client Client { get; set; }
+        public ClientDto Client { get; set; }
+    }
+
+    public class ClientDto
+    {
+        public string Name { get; set; }
     }
 }

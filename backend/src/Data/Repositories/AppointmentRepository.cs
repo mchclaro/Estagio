@@ -126,6 +126,7 @@ namespace Data.Repositories
                     .Include(a => a.Client)
                     .Include(a => a.Estimate)
                     .Include(a => a.AppointmentPayments)
+                    .ThenInclude(a => a.PaymentMethod)
                     .Where(x => x.DataHeld.Date == DateTime.Now.Date)
                     .ToListAsync();
         }
@@ -139,6 +140,7 @@ namespace Data.Repositories
                     .Include(a => a.Client)
                     .Include(a => a.Estimate)
                     .Include(a => a.AppointmentPayments)
+                    .ThenInclude(a => a.PaymentMethod)
                     .Where(x => x.DataHeld.Date >= date && x.DataHeld <= DateTime.Now.Date)
                     .ToListAsync();
         }

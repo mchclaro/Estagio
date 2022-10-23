@@ -14,7 +14,7 @@ namespace Application.Aggregates.Appointment.Queries
     {
         public class Query : IRequest<StandardResult<List<ListAppointmentDTO>>>
         {
-            
+
         }
         public class Handler : IRequestHandler<Query, StandardResult<List<ListAppointmentDTO>>>
         {

@@ -1,3 +1,44 @@
 .container {
-    padding: 0px 55px;
+    padding: 0px 0px;
+  }
+
+.space {
+    padding-left: 50px;
+  }
+
+.linha_vertical {
+    height: 40px;/*Altura da linha*/
+    border-left: 2px solid;/* Adiciona borda esquerda na div como ser fosse uma linha.*/
+  }
+
+.table_responsive {
+    text-align: center;
+    overflow-x: auto;
+    margin: 30px;
+    font-weight: bold;
+    float: left;
+  }
+  
+.table_responsive thead th {
+    background-color: #00509d;
+    color: white;
+  }
+
+.table_responsive2 {
+    text-align: center;
+    overflow-x: auto;
+    margin: 30px;
+    font-weight: bold;
+    float: left;
+  }
+  
+.table_responsive2 thead th {
+    background-color: #00509d;
+    color: white;
+  }
+
+h6 {
+  color: #00509d;
+  font-size: 18px;
+  font-weight: bold;
   }

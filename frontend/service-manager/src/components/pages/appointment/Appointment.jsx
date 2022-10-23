@@ -76,8 +76,8 @@ export default function Appointment() {
     description: '',
     dataHeld: '',
     status: '',
-    estimateId: '',
-    clientId: ''
+    estimate: '',
+    client: ''
   });
 
   const handleChange = (e) => {
@@ -147,8 +147,8 @@ export default function Appointment() {
                 <th scope="col">Descrição</th>
                 <th scope="col">Data Realizada</th>
                 <th scope="col">Status</th>
-                <th scope="col">EstimateId</th>
-                <th scope="col">ClientId</th>
+                <th scope="col">Orçamento</th>
+                <th scope="col">Cliente</th>
                 <th scope="col">Ações</th>
               </tr>
             </thead>
@@ -158,9 +158,9 @@ export default function Appointment() {
                   <td>{app.id}</td>
                   <td>{app.description}</td>
                   <td>{app.dataHeld}</td>
-                  <td>{app.status}</td>
-                  <td>{app.estimateId}</td>
-                  <td>{app.clientId}</td>
+                  <td>{app.status == '1' ? 'Cancelado' : app.status == '2' ? 'Pendente' : 'Concluído'}</td>
+                  <td>{app.estimate.id} - {app.estimate.service}</td>
+                  <td>{app.client.name}</td>
 
                   <td>
                     <button
