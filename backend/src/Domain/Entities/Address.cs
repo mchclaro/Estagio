@@ -12,7 +12,6 @@ namespace Domain.Entities
         public string ZipCode { get; set; }
         public string StreetNumber { get; set; }
         public string District { get; set; }
-        public string Complement { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public virtual ICollection<Client> Clients { get; set; }

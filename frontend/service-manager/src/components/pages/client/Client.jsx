@@ -16,7 +16,6 @@ export default function Client() {
   const [client, setClient] = useState({ id: 0 });
 
   const [clientSelected, setClientSelected] = useState({
-    id: '',
     name: '',
     phone: '',
     photoUrl: '',
@@ -24,7 +23,6 @@ export default function Client() {
     addressStreet: '',
     addressStreetNumber: '',
     addressDistrict: '',
-    addressComplement: '',
     zipcode: '',
     addressState: '',
     addressCity: ''
@@ -36,7 +34,6 @@ export default function Client() {
   };
 
   const addClient = async () => {
-    // clientSelected.status=parseInt(clientSelected.status);
     handleClientModal();
     const response = await axios.post(`${baseUrl}create`, clientSelected)
     setData([...data, response.data.data]);
@@ -52,14 +49,6 @@ export default function Client() {
   const cancelClient = () => {
     setClient({ id: 0 });
     handleClientModal();
-  };
-
-  const updateClient = async (c) => {
-    handleClientModal();
-    const response = await axios.put(`${baseUrl}update`, clientSelected)
-    const { id } = response.data;
-    setData(data.map((item) => (item.id === id ? response.data : item)));
-    setClient({ id: 0 });
   };
 
   const handleConfirmModal = (id) => {
@@ -95,6 +84,14 @@ export default function Client() {
       setData([...clientsFilter]);
     }
   };
+
+  // const updateClient = async (c) => {
+  //   handleClientModal();
+  //   const response = await axios.put(`${baseUrl}update`, clientSelected)
+  //   const { id } = response.data;
+  //   setData(data.map((item) => (item.id === id ? response.data : item)));
+  //   setClient({ id: 0 });
+  // };
 
   useEffect(() => {
     getClients();
@@ -139,10 +136,10 @@ export default function Client() {
                   <td>{cli.id}</td>
                   <td>{cli.name}</td>
                   <td>{cli.phone}</td>
-                  <td>{cli.address.street}, {cli.address.streetNumber}, {cli.address.district}, {cli.address.zipCode}</td>
+                  <td>{cli.address.street}, {cli.address.streetNumber}, {cli.address.district}, {cli.address.zipCode}
+                  </td>
                   <td>{cli.address.city}</td>
                   <td>{cli.address.state}</td>
-
                   <td>
                     <button
                       className="btn  btn-sm btn-outline-primary me-2"
@@ -193,7 +190,6 @@ export default function Client() {
               <label className="form-label">Foto</label>
               <input
                 name="photoUrl"
-                value={client.photoUrl}
                 onChange={handleChange}
                 id="photoUrl"
                 type="file"
@@ -243,19 +239,6 @@ export default function Client() {
             </div>
 
             <div className="col-md-6">
-              <label className="form-label">Complemento</label>
-              <input
-                name="addressComplement"
-                value={client.addressComplement}
-                onChange={handleChange}
-                id="addressComplement"
-                type="text"
-                className="form-control"
-              />
-              <br />
-            </div>
-
-            <div className="col-md-6">
               <label className="form-label">CEP</label>
               <input
                 name="zipcode"
@@ -279,7 +262,7 @@ export default function Client() {
                 className="form-select"
               >
                 <option defaultValue="Não definido">Selecionar</option>
-                <option value="SP">São Paulo</option>
+                <option value="São Paulo">São Paulo</option>
                 <option value="AC">Acre</option>
                 <option value="AL">Alagoas</option>
                 <option value="AP">Amapá</option>

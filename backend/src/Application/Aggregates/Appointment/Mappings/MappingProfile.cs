@@ -32,6 +32,8 @@ namespace Application.Aggregates.Appointment.Mappings
             .ForMember(dest => dest.Description, src => src.MapFrom(src => src.Description))
             .ForMember(dest => dest.DataHeld, src => src.MapFrom(src => src.DataHeld))
             .ForMember(dest => dest.Status, src => src.MapFrom(src => src.Status))
+            .ForMember(dest => dest.EstimateId, src => src.MapFrom(src => src.EstimateId))
+            .ForMember(dest => dest.ClientId, src => src.MapFrom(src => src.ClientId))
             .ForMember(dest => dest.Estimate, src => src.MapFrom(src => new ListAppointmentDTO.EstimateDTO
             {
                 Id = src.Estimate.Id,

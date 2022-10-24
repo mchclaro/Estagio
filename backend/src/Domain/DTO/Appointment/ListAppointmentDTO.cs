@@ -14,6 +14,8 @@ namespace Domain.DTO.Appointment
         public string Description { get; set; }
         public DateTime DataHeld { get; set; }
         public Status Status { get; set; }
+        public int EstimateId { get; set; }
+        public int ClientId { get; set; }
         public virtual EstimateDTO Estimate { get; set; }
         public virtual ClientDTO Client { get; set; }
         public virtual ICollection<AppointmentPaymentDTO> AppointmentPayments { get; set; }

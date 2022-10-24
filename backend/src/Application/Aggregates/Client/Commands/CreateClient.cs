@@ -20,7 +20,6 @@ namespace Application.Aggregates.Client.Commands
             public string AddressStreetNumber { get; set; }
             public string AddressDistrict { get; set; }
             public string AddressState { get; set; }
-            public string AddressComplement { get; set; }
             public string AddressCity { get; set; }
         }
         public class Handler : IRequestHandler<Command, StandardResult<object>>
@@ -105,7 +104,6 @@ namespace Application.Aggregates.Client.Commands
                 {
                     Street = request.AddressStreet,
                     StreetNumber = request.AddressStreetNumber,
-                    Complement = request.AddressComplement,
                     District = request.AddressDistrict,
                     ZipCode = ValidationHelper.RemoveDirtCharsForCep(request.Zipcode),
                     State = request.AddressState,

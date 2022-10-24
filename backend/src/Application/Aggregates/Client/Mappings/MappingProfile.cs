@@ -22,7 +22,6 @@ namespace Application.Aggregates.Client.Mappings
                 District = src.AddressDistrict,
                 City = src.AddressCity,
                 State = src.AddressState,
-                Complement = src.AddressComplement,
                 ZipCode = ValidationHelper.RemoveDirtCharsForCep(src.Zipcode)
             }));
 
@@ -35,7 +34,6 @@ namespace Application.Aggregates.Client.Mappings
                {
                    Street = src.Address.Street,
                    StreetNumber = src.Address.StreetNumber,
-                   Complement = src.Address.Complement,
                    District = src.Address.District,
                    City = src.Address.City,
                    State = src.Address.State,

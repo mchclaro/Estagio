@@ -9,7 +9,7 @@ export default function Appointment() {
 
   const baseUrl = "https://localhost:5001/api/Appointment/";
   const [data, setData] = useState([]);
-  const [smshowConfirmModal, setSmshowConfirmModal] = useState(false);
+  // const [smshowConfirmModal, setSmshowConfirmModal] = useState(false);
   const [showAppointmentModal, setShowAppointmentModal] = useState(false);
   const handleAppointmentModal = () => setShowAppointmentModal(!showAppointmentModal);
   const [appointment, setAppointment] = useState({ id: 0 });
@@ -21,26 +21,10 @@ export default function Appointment() {
 
   const addAppointment = async () => {
     appointmentSelected.status = parseInt(appointmentSelected.status);
-    appointmentSelected.clientId = parseInt(appointmentSelected.clientId);
-    appointmentSelected.estimateId = parseInt(appointmentSelected.estimateId);
     handleAppointmentModal();
     const response = await axios.post(`${baseUrl}create`, appointmentSelected)
     setData([...data, response.data.data]);
   };
-
-  // const  addAppointment = async () => {
-  //   delete appointmentSelected.id;
-  //   appointmentSelected.status=parseInt(appointmentSelected.status);
-  //   appointmentSelected.clientId=parseInt(appointmentSelected.clientId);
-  //   appointmentSelected.estimateId=parseInt(appointmentSelected.estimateId);
-
-  //   await axios.post(`${baseUrl}create`, appointmentSelected)
-  //   .then(response => {
-  //     setData(data.concat(response.data.data));
-  //   }).catch(error => {
-  //     console.log(error);
-  //   })
-  // }
 
   const editAppointment = (id) => {
     const appoint = data.filter((c) => c.id === id);
@@ -53,31 +37,13 @@ export default function Appointment() {
     handleAppointmentModal();
   };
 
-  const updateAppointment = async (c) => {
-    handleAppointmentModal();
-    const response = await axios.put(`${baseUrl}update`, appointmentSelected)
-    const { id } = response.data;
-    setData(data.map((item) => (item.id === id ? response.data : item)));
-    setAppointment({ id: 0 });
-  };
-
-  // const handleConfirmModal = (id) => {
-  //   if (id !== 0 && id !== undefined) {
-  //     const appoint = data.filter((c) => c.id === id);
-  //     setAppointment(appoint[0]);
-  //   } else {
-  //     setAppointment({ id: 0 });
-  //   }
-  //   setSmshowConfirmModal(!smshowConfirmModal);
-  // };
-
   const [appointmentSelected, setAppointmentSelected] = useState({
     id: '',
     description: '',
     dataHeld: '',
     status: '',
     estimate: '',
-    client: ''
+    client: '',
   });
 
   const handleChange = (e) => {
@@ -96,6 +62,23 @@ export default function Appointment() {
     })
   };
 
+  // const updateAppointment = async (c) => {
+  //   handleAppointmentModal();
+  //   const response = await axios.put(`${baseUrl}update`, appointmentSelected)
+  //   const { id } = response.data;
+  //   setData(data.map((item) => (item.id === id ? response.data : item)));
+  //   setAppointment({ id: 0 });
+  // };
+
+  // const handleConfirmModal = (id) => {
+  //   if (id !== 0 && id !== undefined) {
+  //     const appoint = data.filter((c) => c.id === id);
+  //     setAppointment(appoint[0]);
+  //   } else {
+  //     setAppointment({ id: 0 });
+  //   }
+  //   setSmshowConfirmModal(!smshowConfirmModal);
+  // };
   // const deleteAppointment = async (id) => {
   //   handleConfirmModal(0);
   //   if (await api.delete(`Appointment/delete/${id}`)) {
@@ -161,7 +144,6 @@ export default function Appointment() {
                   <td>{app.status == '1' ? 'Cancelado' : app.status == '2' ? 'Pendente' : 'Concluído'}</td>
                   <td>{app.estimate.id} - {app.estimate.service}</td>
                   <td>{app.client.name}</td>
-
                   <td>
                     <button
                       className="btn  btn-sm btn-outline-primary me-2"
@@ -178,71 +160,76 @@ export default function Appointment() {
 
         <Modal size="lg" show={showAppointmentModal} onHide={handleAppointmentModal}>
           <ModalHeader> Adicionar Agendamento </ModalHeader>
-          <ModalBody>
-            <div className="col-md-6">
-              <label className="form-label">Descrição</label>
-              <input
-                name="description"
-                onChange={handleChange}
-                id="description"
-                type="text"
-                className="form-control"
-              />
-            </div>
+            <ModalBody>
+              <div className="col-md-6">
+                <label className="form-label">Descrição</label>
+                <input
+                  name="description"
+                  value={appointment.description}
+                  onChange={handleChange}
+                  id="description"
+                  type="text"
+                  className="form-control"
+                />
+              </div>
 
-            <div className="col-md-6">
-              <label className="form-label">Data Realizada</label>
-              <input
-                name="dataHeld"
-                onChange={handleChange}
-                id="dataHeld"
-                type="text"
-                className="form-control"
-              />
-            </div>
+              <div className="col-md-6">
+                <label className="form-label">Data Realizada</label>
+                <input
+                  name="dataHeld"
+                  value={appointment.dataHeld}
+                  onChange={handleChange}
+                  id="dataHeld"
+                  type="text"
+                  className="form-control"
+                />
+              </div>
 
-            <div className="col-md-6">
-              <label className="form-label">Status</label>
-              <select
-                name="status"
-                onChange={handleChange}
-                id="status"
-                type="text"
-                className="form-select"
-              >
-                <option defaultValue="Não definido">Selecionar</option>
-                <option value="1">Cancelado</option>
-                <option value="2">Pendente</option>
-                <option value="3">Concluído</option>
-              </select>
-              <br />
-            </div>
+              <div className="col-md-6">
+                <label className="form-label">Status</label>
+                <select
+                  name="status"
+                  value={appointment.status}
+                  onChange={handleChange}
+                  id="status"
+                  type="text"
+                  className="form-select"
+                >
+                  <option defaultValue="Não definido">Selecionar</option>
+                  <option value="1">Cancelado</option>
+                  <option value="2">Pendente</option>
+                  <option value="3">Concluído</option>
+                </select>
+                <br />
+              </div>
 
-            <div className="col-md-6">
-              <label className="form-label">Orçamento</label>
-              <input
-                name="estimateId"
-                onChange={handleChange}
-                id="estimateId"
-                type="text"
-                className="form-control"
-              />
-              <br />
-            </div>
-
-            <div className="col-md-6">
-              <label className="form-label">Cliente</label>
-              <input
-                name="clientId"
-                onChange={handleChange}
-                id="clientId"
-                type="text"
-                className="form-control"
-              />
-              <br />
-            </div>
-          </ModalBody>
-
+              <div className="col-md-6">
+                <label className="form-label">Orçamento</label>
+                <input
+                  name="estimateId"
+                  value={appointment.estimateId}
+                  onChange={handleChange}
+                  id="estimateId"
+                  type="text"
+                  className="form-control"
+                />
+                <br />
+              </div>
+              
+              <div className="col-md-6">
+                <label className="form-label">Cliente</label>
+                <input
+                  name="clientId"
+                  value={appointment.clientId}
+                  onChange={handleChange}
+                  id="clientId"
+                  type="text"
+                  className="form-control"
+                />
+                <br />
+              </div>
+            </ModalBody>
+          
           <ModalFooter>
             <div className="col-12 mt-0">
               <button

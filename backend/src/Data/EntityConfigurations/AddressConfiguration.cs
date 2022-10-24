@@ -31,10 +31,6 @@ namespace Data.EntityConfigurations
                 .IsRequired(false)
                 .HasMaxLength(255);
             
-            builder.Property(e => e.Complement)
-                .IsRequired(false)
-                .HasMaxLength(255);
-            
             builder.Property(e => e.City)
                 .IsRequired(false)
                 .HasMaxLength(255);

@@ -62,7 +62,6 @@ namespace Data.Repositories
                         Street = x.Address.Street,
                         StreetNumber = x.Address.StreetNumber,
                         ZipCode = x.Address.ZipCode,
-                        Complement = x.Address.Complement,
                         District = x.Address.District,
                         City = x.Address.City,
                         State = x.Address.State
@@ -96,7 +95,6 @@ namespace Data.Repositories
                 address.StreetNumber = client.Address.StreetNumber;
                 address.ZipCode = client.Address.ZipCode;
                 address.District = client.Address.District;
-                address.Complement = client.Address.Complement;
                 address.City = client.Address.City;
                 address.State = client.Address.State;
             }
