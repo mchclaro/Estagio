@@ -14,6 +14,12 @@ export default function Appointment() {
   const handleAppointmentModal = () => setShowAppointmentModal(!showAppointmentModal);
   const [appointment, setAppointment] = useState({ id: 0 });
 
+  const [description, setDescription] = useState("");
+  const [dataHeld, setDataHeld] = useState("");
+  const [status, setStatus] = useState("");
+  const [estimate, setEstimate] = useState("");
+  const [client, setClient] = useState("");
+
   const newAppointment = () => {
     setAppointment({ id: 0 });
     handleAppointmentModal();
@@ -23,12 +29,16 @@ export default function Appointment() {
     appointmentSelected.status = parseInt(appointmentSelected.status);
     handleAppointmentModal();
     const response = await axios.post(`${baseUrl}create`, appointmentSelected)
-    setData([...data, response.data.data]);
+    setData([...data, response.data.data])
   };
 
   const editAppointment = (id) => {
-    const appoint = data.filter((c) => c.id === id);
-    setAppointment(appoint[0]);
+    const appointment = data.filter((c) => c.id === id)[0];
+    setDescription(appointment.description);
+    setDataHeld(appointment.dataHeld);
+    setStatus(appointment.status);
+    setEstimate(appointment.estimate.id);
+    setClient(appointment.clientId);
     handleAppointmentModal();
   };
 
@@ -48,8 +58,8 @@ export default function Appointment() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setAppointmentSelected({
-      ...appointmentSelected,
+    setAppointment({
+      ...appointment,
       [name]: value
     });
   }
@@ -165,8 +175,10 @@ export default function Appointment() {
                 <label className="form-label">Descrição</label>
                 <input
                   name="description"
-                  value={appointment.description}
-                  onChange={handleChange}
+                  value={description}
+                  onChange={e => {
+                    setDescription(e.target.value)
+                  }}
                   id="description"
                   type="text"
                   className="form-control"
@@ -177,8 +189,10 @@ export default function Appointment() {
                 <label className="form-label">Data Realizada</label>
                 <input
                   name="dataHeld"
-                  value={appointment.dataHeld}
-                  onChange={handleChange}
+                  value={dataHeld}
+                  onChange={e => {
+                    setDataHeld(e.target.value)
+                  }}
                   id="dataHeld"
                   type="text"
                   className="form-control"
@@ -207,8 +221,10 @@ export default function Appointment() {
                 <label className="form-label">Orçamento</label>
                 <input
                   name="estimateId"
-                  value={appointment.estimateId}
-                  onChange={handleChange}
+                  value={estimate}
+                  onChange={e => {
+                    setEstimate(e.target.value)
+                  }}
                   id="estimateId"
                   type="text"
                   className="form-control"
@@ -220,8 +236,10 @@ export default function Appointment() {
                 <label className="form-label">Cliente</label>
                 <input
                   name="clientId"
-                  value={appointment.clientId}
-                  onChange={handleChange}
+                  value={client}
+                  onChange={e => {
+                    setClient(e.target.value)
+                  }}
                   id="clientId"
                   type="text"
                   className="form-control"

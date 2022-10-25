@@ -36,7 +36,8 @@ export default function Estimate() {
     service: '',
     value: '',
     validateDate: '',
-    client: ''
+    client: '',
+    clientId: ''
   });
 
   const handleChange = (e) => {
@@ -149,7 +150,7 @@ export default function Estimate() {
                 name="validateDate"
                 onChange={handleChange}
                 id="validateDate"
-                type="date"
+                type="text"
                 className="form-control"
               />
               <br />
@@ -158,9 +159,9 @@ export default function Estimate() {
             <div className="col-md-6">
               <label className="form-label">Cliente</label>
               <input
-                name="client"
+                name="clientId"
                 onChange={handleChange}
-                id="client"
+                id="clientId"
                 type="text"
                 className="form-control"
               />

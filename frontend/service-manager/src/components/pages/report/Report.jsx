@@ -75,7 +75,8 @@ export default function Report() {
                                         <strong>Id: </strong>{re.id} |
                                         <strong> Descrição: </strong>{re.description} |
                                         <strong> Data Realizada: </strong>{re.dataHeld} |
-                                        <strong> Status: </strong>{re.status == '1' ? 'Cancelado' : re.status == '2' ? 'Pendente' : 'Concluído'}</p>
+                                        <strong> Status: </strong>{re.status == '1' ? 'Cancelado' : re.status == '2' ? 'Pendente' : 'Concluído'}
+                                    </p>
                                     <div>
                                         <h6>Orçamento</h6>
                                     </div>

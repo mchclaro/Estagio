@@ -100,7 +100,7 @@ namespace Data.Repositories
 
         public async Task Update(int id, User user)
         {
-            var res = await _context.Users.FirstOrDefaultAsync(c => c.Id == user.Id);
+            var res = await _context.Users.FirstOrDefaultAsync(c => c.Id == user.Id && (int)user.Role == 1);
 
             if (res != null)
             {

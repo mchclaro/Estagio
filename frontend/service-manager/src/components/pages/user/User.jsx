@@ -15,6 +15,13 @@ export default function User() {
     const handleUserModal = () => setShowUserModal(!showUserModal);
     const [user, setUser] = useState({ id: 0 });
 
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [email, setEmail] = useState("");
+    const [photoUrl, setPhotoUrl] = useState("");
+    const [role, setRole] = useState("");
+    const [password, setPassword] = useState("");
+
     const [userSelected, setUserSelected] = useState({
         id: '',
         name: '',
@@ -30,16 +37,20 @@ export default function User() {
     };
 
     const addUser = async () => {
-        // userSelected.status=parseInt(userSelected.status);
         handleUserModal();
         const response = await axios.post(`${baseUrl}create`, userSelected)
         setData([...data, response.data.data]);
-        console.log(data);
     };
 
     const editUser = (id) => {
-        const cli = data.filter((c) => c.id === id);
-        setUser(cli[0]);
+        const user = data.filter((c) => c.id === id)[0];
+
+        setName(user.name);
+        setPhone(user.phone);
+        setEmail(user.email);
+        setPhotoUrl(user.photoUrl);
+        setRole(user.role);
+        setPassword(user.password);
         handleUserModal();
     };
 
@@ -60,8 +71,8 @@ export default function User() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUserSelected({
-            ...userSelected,
+        setUser({
+            ...user,
             [name]: value
         });
     }
@@ -69,7 +80,6 @@ export default function User() {
     const getUsers = async () => {
         await axios.get(`${baseUrl}read/all`).then(response => {
             setData(response.data.data);
-            console.log(response.data.data.id);
         }).catch(error => {
             console.log(error);
         })
@@ -119,30 +129,23 @@ export default function User() {
                             <b className="p-1 me-1">Novo Usuário</b>
                         </Button>
                     </header>
-                    <div className={styles.table_responsive_profile}>
-                        <table className="table table-responsive table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Nome</th>
-                                    <th scope="col">Telefone</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Perfil</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.map(u =>
-                                    <tr key={u.id}>
-                                        <td>{u.id}</td>
-                                        <td>{u.name}</td>
-                                        <td>{u.phone}</td>
-                                        <td>{u.email}</td>
-                                        <td>{u.role}</td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div >
+                    <div className="card text-left mb-3 shadow-sm border-dark" style={{width: "500px"}} >
+                        <div className="card-body">
+                            <div className="card-text">
+                                <div>
+                                    <h6>Usuário Atual</h6>
+                                </div>
+                                <p>
+                                    <strong>Id: </strong>{} <br />
+                                    <strong>Nome: </strong>{} <br />
+                                    <strong> Telefone: </strong>{} <br />
+                                    <strong> Email: </strong>{} <br />
+                                    <strong> Ativo: </strong>{} <br />
+                                    {/* <strong> Status: </strong>{x.role == '1' ? 'Admin' : 'Funcionário'} */}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
                     <div className={styles.table_responsive}>
                         <table className="table table-responsive table-borderless table-light table-striped">
@@ -191,7 +194,10 @@ export default function User() {
                                 <label className="form-label">Nome</label>
                                 <input
                                     name="name"
-                                    onChange={handleChange}
+                                    value={name}
+                                    onChange={e => {
+                                        setName(e.target.value)
+                                    }}
                                     id="name"
                                     type="text"
                                     className="form-control"
@@ -202,7 +208,10 @@ export default function User() {
                                 <label className="form-label">Telefone</label>
                                 <input
                                     name="phone"
-                                    onChange={handleChange}
+                                    value={phone}
+                                    onChange={e => {
+                                        setPhone(e.target.value)
+                                    }}
                                     id="phone"
                                     type="text"
                                     className="form-control"
@@ -213,7 +222,10 @@ export default function User() {
                                 <label className="form-label">Email</label>
                                 <input
                                     name="email"
-                                    onChange={handleChange}
+                                    value={email}
+                                    onChange={e => {
+                                        setEmail(e.target.value)
+                                    }}
                                     id="email"
                                     type="text"
                                     className="form-control"
@@ -224,7 +236,10 @@ export default function User() {
                                 <label className="form-label">Senha</label>
                                 <input
                                     name="password"
-                                    onChange={handleChange}
+                                    value={password}
+                                    onChange={e => {
+                                        setPassword(e.target.value)
+                                    }}
                                     id="password"
                                     type="password"
                                     className="form-control"
@@ -235,7 +250,7 @@ export default function User() {
                                 <label className="form-label">Foto</label>
                                 <input
                                     name="photoUrl"
-                                    onChange={handleChange}
+
                                     id="photoUrl"
                                     type="file"
                                     className="form-control"
@@ -247,7 +262,10 @@ export default function User() {
                                 <label className="form-label">Perfil</label>
                                 <select
                                     name="role"
-                                    onChange={handleChange}
+                                    value={role}
+                                    onChange={e => {
+                                        setRole(e.target.value)
+                                    }}
                                     id="role"
                                     type="text"
                                     className="form-select"
