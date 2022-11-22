@@ -17,8 +17,8 @@ namespace Infrastructure.FileService
 
         public CloudStorageService()
         {
-            AwsKeyID = "AKIAXLC2NDNZSM7ZKL6S";
-            AwsKeySecret = "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";
+            AwsKeyID = "";
+            AwsKeySecret = "";
             AWSCredentials = new BasicAWSCredentials(AwsKeyID, AwsKeySecret);
             var config = new AmazonS3Config
             {
@@ -60,13 +60,6 @@ namespace Infrastructure.FileService
         public async Task DeleteFileFromUrlS3(string url)
         {
             var response = await _awsS3Client.DeleteObjectAsync(BucketName, url);
-            // var response = new DeleteObjectRequest
-            // {
-            //     BucketName = BucketName,
-            //     Key = url
-            // };
-
-            // await _awsS3Client.DeleteObjectAsync(response);
         }
     }
 }
