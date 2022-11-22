@@ -6,7 +6,7 @@
 ### Seguindo um padrão de Design Patterns e Clean Code, utilizamos o AspNet Core junto com o CQRS e Mediator para organizar ainda melhor nosso projeto. Fazendo com que ele tenha um nível profissional de projeto e que qualquer pessoa com um breve conhecimento possa dar manutenção e entender como funciona ele ao todo.
 
 ### O projeto tem integração com o S3 da AWS para armazenar as imagens em cloud. Para fazer o upload da foto no S3, você deve criar um bucket lá e configurar a localização dele e suas credenciais no arquivo CloudStorageService e também o nome do bucket em todos lugares que tem a variável bucket = " " (2 lugares) e a variável BucketName = " " (1 lugar)
-### Caso não queria, pode usar o armazenamento local para as imagens mesmo, é só trocar as referência de CloudStorageService para LocalStorageService.
+### Caso não queira, pode usar o armazenamento local para as imagens mesmo, é só trocar as referência de CloudStorageService para LocalStorageService.
 
 ### Para o frontend consumir a API do backend usamos o Axios.
 
